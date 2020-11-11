@@ -1,6 +1,6 @@
 import pandas as pd
 import dash
-import dash_auth
+#import dash_auth
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
@@ -325,12 +325,14 @@ stCCA['Date'] = pd.to_datetime(stCCA.Date)
 
 datesCCA = pd.DataFrame()
 datesCCA["Dates"] = stCCA['Date']
+Yesterday = datesCCA["Dates"].astype(str).tolist()
 datesCCA["DOW"] = datesCCA["Dates"] - datesCCA["Dates"].dt.weekday * np.timedelta64(1, 'D')
 dates2CCA = pd.DataFrame()
 dates2CCA['DOW'] = datesCCA["DOW"]
 dates2CCA = dates2CCA.drop_duplicates()
 dates2CCA['DOW'] = dates2CCA['DOW'].astype(str)
 datesCCA = dates2CCA['DOW'].tolist()
+yesterday = Yesterday[-1]
 
 
 fig3_dfCCA = stCCA.copy()
@@ -411,10 +413,10 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
 
-auth = dash_auth.BasicAuth(
-    app,
-    VALID_USERNAME_PASSWORD_PAIRS
-)
+#auth = dash_auth.BasicAuth(
+#    app,
+#    VALID_USERNAME_PASSWORD_PAIRS
+#)
 
 # Populate the layout with HTML and graph components
 app.layout = html.Div(children = [
@@ -457,7 +459,7 @@ app.layout = html.Div(children = [
     ),
     dcc.Graph(id='tableCCA', figure=figure3CCA),
     html.Br(), html.Br(),
-    html.H4("Percent Change Relative to Yesterday"),
+    html.H4("Percent Change Relative to "+yesterday),
     html.Div(
         [
             dcc.Dropdown(
@@ -476,7 +478,7 @@ app.layout = html.Div(children = [
     ])
     ,
     html.Br(), html.Br(),
-    html.H4("Change Relative to Yesterday"),
+    html.H4("Change Relative to "+yesterday),
     html.Div(
         [
             dcc.Dropdown(
@@ -533,7 +535,7 @@ app.layout = html.Div(children = [
     ),
     dcc.Graph(id='tableAEPCCA', figure=figure3AEPCCA),
     html.Br(), html.Br(),
-    html.H4("Percent Change Relative to Yesterday"),
+    html.H4("Percent Change Relative to "+yesterday),
     html.Div(
         [
             dcc.Dropdown(
@@ -552,7 +554,7 @@ app.layout = html.Div(children = [
     ])
     ,
     html.Br(), html.Br(),
-    html.H4("Change Relative to Yesterday"),
+    html.H4("Change Relative to "+yesterday),
     html.Div(
         [
             dcc.Dropdown(
@@ -609,7 +611,7 @@ app.layout = html.Div(children = [
     ),
     dcc.Graph(id='tableIBCCA', figure=figure3IBCCA),
     html.Br(), html.Br(),
-    html.H4("Percent Change Relative to Yesterday"),
+    html.H4("Percent Change Relative to "+yesterday),
     html.Div(
         [
             dcc.Dropdown(
@@ -628,7 +630,7 @@ app.layout = html.Div(children = [
     ])
     ,
     html.Br(), html.Br(),
-    html.H4("Change Relative to Yesterday"),
+    html.H4("Change Relative to "+yesterday),
     html.Div(
         [
             dcc.Dropdown(
@@ -692,7 +694,7 @@ def update_graph(Metrics):
         'layout':
         go.Layout(
             title='Percent Change in {}'.format(Metrics),
-            xaxis = dict(title = 'Yesterday Relative to:'),
+            xaxis = dict(title = yesterday+' Relative to:'),
             yaxis = dict(tickformat=".0%"),
           #  font_family="Times New Roman",
           #  paper_bgcolor='#000000',
@@ -736,7 +738,7 @@ def update_graph(Metrics):
         'layout':
         go.Layout(
             title='Change in {}'.format(Metrics),
-            xaxis = dict(title = 'Yesterday Relative to:'),
+            xaxis = dict(title = yesterday+' Relative to:'),
             #yaxis = dict(tickformat=".0%"),
           #  font_family="Times New Roman",
           #  paper_bgcolor='#000000',
@@ -830,7 +832,7 @@ def update_graph(Metrics):
         'layout':
         go.Layout(
             title='Percent Change in {}'.format(Metrics),
-            xaxis = dict(title = 'Yesterday Relative to:'),
+            xaxis = dict(title = yesterday+' Relative to:'),
             yaxis = dict(tickformat=".0%"),
           #  font_family="Times New Roman",
           #  paper_bgcolor='#000000',
@@ -874,7 +876,7 @@ def update_graph(Metrics):
         'layout':
         go.Layout(
             title='Change in {}'.format(Metrics),
-            xaxis = dict(title = 'Yesterday Relative to:'),
+            xaxis = dict(title = yesterday+' Relative to:'),
             #yaxis = dict(tickformat=".0%"),
           #  font_family="Times New Roman",
           #  paper_bgcolor='#000000',
@@ -967,7 +969,7 @@ def update_graph(Metrics):
         'layout':
         go.Layout(
             title='Percent Change in {}'.format(Metrics),
-            xaxis = dict(title = 'Yesterday Relative to:'),
+            xaxis = dict(title = yesterday+' Relative to:'),
             yaxis = dict(tickformat=".0%"),
           #  font_family="Times New Roman",
           #  paper_bgcolor='#000000',
@@ -1011,7 +1013,7 @@ def update_graph(Metrics):
         'layout':
         go.Layout(
             title='Change in {}'.format(Metrics),
-            xaxis = dict(title = 'Yesterday Relative to:'),
+            xaxis = dict(title = yesterday+' Relative to:'),
             #yaxis = dict(tickformat=".0%"),
           #  font_family="Times New Roman",
           #  paper_bgcolor='#000000',
