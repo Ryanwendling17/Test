@@ -1,0 +1,28 @@
+html{
+    background-color: lightgrey;
+}
+body{
+    background-color: white;
+    border-radius: 15px;
+    padding: 10px;
+}
+#table {
+    width: 50%;
+}
+h2 {
+    height: 60px;
+    line-height: 60px;
+    border-bottom: #00aec7 solid;
+    color: #f47b20;
+    background-color: white;
+    border-bottom-left-radius: 15px;
+    padding: 10px;
+}
+
+h4 {
+    color: #f47b20; 
+    border-bottom: thin #00aec7 solid;
+    background-color: white;
+    border-bottom-left-radius: 15px;
+    padding: 10px;
+}
