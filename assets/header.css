@@ -6,7 +6,13 @@ body{
     border-radius: 15px;
     padding: 10px;
 }
-#table {
+#tableCCA {
+    width: 50%;
+}
+#tableAEPCCA {
+    width: 50%;
+}
+#tableIBCCA {
     width: 50%;
 }
 h2 {
