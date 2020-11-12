@@ -433,7 +433,8 @@ figure2CCA.layout.width = 800
 VALID_USERNAME_PASSWORD_PAIRS = {
     'ryan.wendling@selectquote.com': password, 
     'david.cable@selectquote.com': password, 
-    'terresha.dinkel@selectquote.com' : password
+    'terresha.dinkel@selectquote.com' : password,
+    'mason.keller@selectquote.com' : password
 }
 
 
