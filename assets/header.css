@@ -68,3 +68,30 @@ h4 {
     border-bottom-left-radius: 15px;
     padding: 10px;
 }
+#namesCCA{
+    width: 25%;
+}
+#namesAEPCCA{
+    width: 25%;
+}
+#namesIBCCA{
+    width: 25%;
+}
+#valuesCCA{
+    width: 25%;
+}
+#valuesAEPCCA{
+    width: 25%;
+}
+#valuesIBCCA{
+    width: 25%;
+}
+#pie-chartCCA{
+    width: 60%
+}
+#pie-chartAEPCCA{
+    width: 60%
+}
+#pie-chartIBCCA{
+    width: 60%
+}
