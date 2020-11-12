@@ -15,6 +15,15 @@ body{
 #tableIBCCA {
     width: 50%;
 }
+#funnel-graphCCA{
+    margin-left: -10px;
+}
+#funnel-graphAEPCCA{
+    margin-left: -10px;
+}
+#funnel-graphIBCCA{
+    margin-left: -10px;
+}
 h2 {
     height: 60px;
     line-height: 60px;
