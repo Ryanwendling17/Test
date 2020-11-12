@@ -9,6 +9,7 @@ import plotly.graph_objects as go
 import numpy as np
 import io
 import plotly.figure_factory as ff
+import plotly.express as px
 
 # ## Call Data and Format
 
@@ -84,7 +85,15 @@ stIBCCA = pd.read_csv(io.StringIO(download.decode('utf-8')))
 del stIBCCA['Position']
 
 
+# Downloading the csv file from your GitHub
 
+url = "https://raw.githubusercontent.com/Ryanwendling17/CCA_WebApp/main/Data/Vendor_IBCCA.csv" # Make sure the url is the raw version of the file on GitHub
+download = github_session.get(url).content
+
+# Reading the downloaded content and making it a pandas dataframe
+
+Vendor_IBCCA = pd.read_csv(io.StringIO(download.decode('utf-8')))
+del Vendor_IBCCA['Position']
 
 
 
@@ -203,7 +212,15 @@ stAEPCCA = pd.read_csv(io.StringIO(download.decode('utf-8')))
 del stAEPCCA['Position']
 
 
+# Downloading the csv file from your GitHub
 
+url = "https://raw.githubusercontent.com/Ryanwendling17/CCA_WebApp/main/Data/Vendor_AEPCCA.csv" # Make sure the url is the raw version of the file on GitHub
+download = github_session.get(url).content
+
+# Reading the downloaded content and making it a pandas dataframe
+
+Vendor_AEPCCA = pd.read_csv(io.StringIO(download.decode('utf-8')))
+del Vendor_AEPCCA['Position']
 
 
 
@@ -314,6 +331,15 @@ stCCA = pd.read_csv(io.StringIO(download.decode('utf-8')))
 del stCCA['Position']
 
 
+# Downloading the csv file from your GitHub
+
+url = "https://raw.githubusercontent.com/Ryanwendling17/CCA_WebApp/main/Data/Vendor_CCA.csv" # Make sure the url is the raw version of the file on GitHub
+download = github_session.get(url).content
+
+# Reading the downloaded content and making it a pandas dataframe
+
+Vendor_CCA = pd.read_csv(io.StringIO(download.decode('utf-8')))
+del Vendor_CCA['Position']
 
 
 
@@ -499,6 +525,25 @@ app.layout = html.Div(children = [
         dcc.Graph(id='my-table2CCA', figure=figure2CCA, style={'display': 'inline-block'})
     ])
     ,
+    html.Br(), html.Br(),
+    html.H4("Metric Composition by Vendor Campaign"),
+    html.P("Metric:"),
+    dcc.Dropdown(
+        id='namesCCA', 
+        value='Calls', 
+        options=[{'value': x, 'label': x} 
+                 for x in metrics],
+        clearable=False
+    ),
+    html.P("Date:"),
+    dcc.Dropdown(
+        id='valuesCCA', 
+        value=yesterday, 
+        options=[{'value': x, 'label': x} 
+                 for x in Vendor_CCA['Date'].drop_duplicates().astype(str).to_list()],
+        clearable=False
+    ),
+    dcc.Graph(id="pie-chartCCA"),
                     ]),
         dcc.Tab(label='AEPCCA', children=[
     html.H2("AEPCCA Performance Metrics", style={'font-size': '28pt'}),
@@ -573,8 +618,27 @@ app.layout = html.Div(children = [
     html.Div(children=[
         dcc.Graph(id='funnel-graph2AEPCCA', style={'display': 'inline-block'}),
         dcc.Graph(id='my-table2AEPCCA', figure=figure2AEPCCA, style={'display': 'inline-block'})
-    ])
-    ,
+    ]),
+        html.Br(), html.Br(),
+    html.H4("Metric Composition by Vendor Campaign"),
+    html.P("Metric:"),
+    dcc.Dropdown(
+        id='namesAEPCCA', 
+        value='Calls', 
+        options=[{'value': x, 'label': x} 
+                 for x in metrics],
+        clearable=False
+    ),
+    html.P("Date:"),
+    dcc.Dropdown(
+        id='valuesAEPCCA', 
+        value=yesterday, 
+        options=[{'value': x, 'label': x} 
+                 for x in Vendor_AEPCCA['Date'].drop_duplicates().astype(str).to_list()],
+        clearable=False
+    ),
+    dcc.Graph(id="pie-chartAEPCCA"),
+
                     ]),
             dcc.Tab(label='IBCCA', children=[
     html.H2("IBCCA Performance Metrics", style={'font-size': '28pt'}),
@@ -651,8 +715,27 @@ app.layout = html.Div(children = [
         dcc.Graph(id='my-table2IBCCA', figure=figure2IBCCA, style={'display': 'inline-block'})
     ])
     ,
+    html.Br(), html.Br(),
+    html.H4("Metric Composition by Vendor Campaign"),
+    html.P("Metric:"),
+    dcc.Dropdown(
+        id='namesIBCCA', 
+        value='Calls', 
+        options=[{'value': x, 'label': x} 
+                 for x in metrics],
+        clearable=False
+    ),
+    html.P("Date:"),
+    dcc.Dropdown(
+        id='valuesIBCCA', 
+        value=yesterday, 
+        options=[{'value': x, 'label': x} 
+                 for x in Vendor_IBCCA['Date'].drop_duplicates().astype(str).to_list()],
+        clearable=False
+    ),
+    dcc.Graph(id="pie-chartIBCCA"),
                     ]),
-
+    
       ])
 ])
 
@@ -1073,6 +1156,44 @@ def update_table(start_date, end_date):
     fig3_df = fig3_df.rename(columns = {'index': ''})
     figure3IBCCA = ff.create_table(fig3_df)
     return figure3IBCCA
+
+@app.callback(
+    Output("pie-chartIBCCA", "figure"), 
+    [Input("namesIBCCA", "value"), 
+     Input("valuesIBCCA", "value")])
+def generate_chart(names, values):
+    df = Vendor_IBCCA[['VendorCampaignName', 'Date', names]]
+    df = df[df.Date == values]
+    df = df[df.names >= 1]
+    del df['Date']
+    figIBCCA = px.pie(df, values = names, names = 'VendorCampaignName', title = names + ' by Campaign on ' + values)
+    return figIBCCA
+
+
+@app.callback(
+    Output("pie-chartAEPCCA", "figure"), 
+    [Input("namesAEPCCA", "value"), 
+     Input("valuesAEPCCA", "value")])
+def generate_chart(names, values):
+    df = Vendor_AEPCCA[['VendorCampaignName', 'Date', names]]
+    df = df[df.Date == values]
+    df = df[df[names] >= .01]
+    del df['Date']
+    figAEPCCA = px.pie(df, values = names, names = 'VendorCampaignName', title = names + ' by Campaign on ' + values)
+    return figAEPCCA
+
+
+@app.callback(
+    Output("pie-chartCCA", "figure"), 
+    [Input("namesCCA", "value"), 
+     Input("valuesCCA", "value")])
+def generate_chart(names, values):
+    df = Vendor_CCA[['VendorCampaignName', 'Date', names]]
+    df = df[df.Date == values]
+    df = df[df[names] >= .01]
+    del df['Date']
+    figCCA = px.pie(df, values = names, names = 'VendorCampaignName', title = names + ' by Campaign on ' + values)
+    return figCCA
 
     
 if __name__ == '__main__':
