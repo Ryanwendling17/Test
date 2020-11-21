@@ -113,7 +113,7 @@ app.layout = html.Div(children = [
      #       ], style = {'width' : '90%',
     #                    'fontSize' : '18px',
     #                    'padding-left' : '100px'}),
-    ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px'}),
+    ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px', 'margin-top': '30px'}),
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
     html.H4("Undergraduate Resources2", style={'font-size': '16pt'}),
