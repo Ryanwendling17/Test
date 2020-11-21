@@ -16,20 +16,44 @@ from fredapi import Fred
 
 api_key = 'c275198525f07f75104d93784a5644ff'
 states = ['AL',	'AK',	'AZ',	'AR',	'CA',	'CO',	'CT',	'DE',	'FL',	'GA',	'HI',	'ID',	'IL',	'IN',	'IA',	'KS',	'KY',	'LA',	'ME',	'MD',	'MA',	'MI',	'MN',	'MS',	'MO',	'MT',	'NE',	'NV',	'NH',	'NJ',	'NM',	'NY',	'NC',	'ND',	'OH',	'OK',	'OR',	'PA',	'RI',	'SC',	'SD',	'TN',	'TX',	'UT',	'VT',	'VA',	'WA',	'WV',	'WI',	'WY']
-states = pd.DataFrame(states, columns = ['State']) 
+statesdf = pd.DataFrame(states, columns = ['State']) 
 
 fred = Fred(api_key=api_key)
 
 stateUR = pd.DataFrame()
 
-for state in states['State']:
-    data = fred.get_series(state+'UR', observation_start='2018-01-01')
-    data = pd.DataFrame(data) 
-    data.reset_index(drop = False, inplace = True)
-    data.rename(columns={"index": "Date", 0: "UR"}, inplace = True)
-    data['State'] = state
-    stateUR = stateUR.append(data, ignore_index=True)
+for state in statesdf['State']:
+    try:
+        data = fred.get_series(state+'UR', observation_start='2019-01-01')
+        data = pd.DataFrame(data) 
+        data.reset_index(drop = False, inplace = True)
+        data.rename(columns={"index": "Date", 0: "UR"}, inplace = True)
+        data['State'] = state
+        stateUR = stateUR.append(data, ignore_index=True)
+    except:
+        pass
 
+datesCCA = stateUR['Date'].unique().tolist()
+
+
+KS = stateUR[stateUR['State'] == 'KS'] 
+trace_1CCA = go.Scatter(x = KS.Date, y = KS['UR'],
+                    name = 'KS Unemployment Rate',
+                    line = dict(width = 2,
+                                color = 'rgb(229, 151, 50)'))
+layoutCCA = go.Layout(hovermode = 'closest', margin=dict(l=50, r=50, t=20, b=50))
+figCCA = go.Figure(data = [trace_1CCA], layout = layoutCCA)
+layout_TS = go.Layout(xaxis=dict(
+    title=dict(
+      text='Week'
+    )
+  ),
+                      yaxis=dict(
+    title=dict(
+      text='Fantasy Points'
+    )
+  ),
+    hovermode = 'closest', margin=dict(l=50, r=50, t=20, b=50))
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -52,8 +76,48 @@ app.layout = html.Div(children = [
         html.P('Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via this link on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)'),
     ],style={'display': 'inline-block', 'width': '40%'}),
     html.Div(children = [
-        html.H4("Ryan Wendling’s Office Hours", style={'font-size': '16pt'}),
-        html.P('Ryan is a senior economics student who works for Professor Slusky. He is also available via Zoom this semester to answer any questions you may have about the economics department. You can access his office hours via this link on Mondays and Fridays from 3-5 pm.  (Password: 102891)'),
+       dcc.Graph(id = 'PlayerComWeek'),
+    # dropdown
+        html.Br(),
+        html.Div(children = [
+            html.Label("Player 1"),
+            html.Label("Player 2")
+        ], style={'margin-right':'20%',
+                 'display': 'inline-flex'}),
+        html.Div(
+        [
+            dcc.Dropdown(
+                id="MyPick",
+                options=[{
+                    'label': i,
+                    'value': i
+                } for i in states],
+                value="KS"),
+            
+            dcc.Dropdown(
+                id="Counterfactual",
+                options=[{
+                    'label': i,
+                    'value': i
+                } for i in states],
+                value=states[1]),
+        ],
+        style={'width': '100%',
+               'margin-right':'20%',
+               'display': 'inline-flex'}),
+    
+                   
+    # range slider
+    #html.P([
+    #    html.Label("Time Period"),
+    #    dcc.RangeSlider(id = 'sliderCCA',
+    #                    marks = {i : datesCCA[i] for i in range(0, len(datesCCA))},
+    #                    min = 0,
+    #                    max = len(datesCCA),
+    #                    value = [1, len(datesCCA)])
+     #       ], style = {'width' : '90%',
+    #                    'fontSize' : '18px',
+    #                    'padding-left' : '100px'}),
     ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px'}),
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
@@ -83,6 +147,30 @@ app.layout = html.Div(children = [
     
       ])
 
+
+
+
+
+#Add callback functions
+@app.callback(Output('PlayerComWeek', 'figure'),
+             [Input('MyPick', 'value'),
+             Input('Counterfactual', 'value')])
+def update_figure(input1, input2):
+    # filtering the data
+    data1 = stateUR[stateUR.State == input1]
+    data2 = stateUR[stateUR.State == input2]
+    # updating the plot
+    trace_1 = go.Scatter(x = data1.Date, y = data1["UR"],
+                        name = input1,
+                        line = dict(width = 2,
+                                    color = 'rgb(229, 151, 50)'))
+    trace_2 = go.Scatter(x = data2.Date, y = data2["UR"],
+                        name = input2,
+                        line = dict(width = 2,
+                                    color = 'rgb(106, 181, 135)'))
+    figCCA = go.Figure(data = [trace_1, trace_2], layout = layout_TS)
+    return figCCA
+  
 
 
     
