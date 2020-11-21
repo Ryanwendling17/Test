@@ -155,16 +155,27 @@ def update_figure(input1, input2):
     data1 = stateUR[stateUR.State == input1]
     data2 = stateUR[stateUR.State == input2]
     # updating the plot
-    trace_1 = go.Scatter(x = data1.Date, y = data1["UR"],
+    trace_1 = go.Scatter(x = data1.Date, y = data1["UR"]/100,
                         name = input1,
-                        line = dict(width = 2,
-                                    color = 'rgb(229, 151, 50)'))
-    trace_2 = go.Scatter(x = data2.Date, y = data2["UR"],
+                         mode='lines+markers',
+                         marker={
+                'size': 10,
+                'opacity': 0.5,
+                'line': {'width': 0.5, 'color': 'white'}
+            }
+                        )
+    trace_2 = go.Scatter(x = data2.Date, y = data2["UR"]/100,
                         name = input2,
-                        line = dict(width = 2,
-                                    color = 'rgb(106, 181, 135)'))
+                         mode='lines+markers',
+                        marker={
+                'size': 10,
+                'opacity': 0.5,
+                'line': {'width': 0.5, 'color': 'white'}
+            })
     figCCA = go.Figure(data = [trace_1, trace_2], layout = layout_TS)
+    figCCA.update_layout(yaxis_tickformat = ",.0%")
     return figCCA
+  
   
 
 
