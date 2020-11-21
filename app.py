@@ -22,8 +22,8 @@ server = app.server
 # Populate the layout with HTML and graph components
 app.layout = html.Div(children = [
     
-    html.H2("Department of Economics", style={'font-size': '28pt'}),
-    html.H3("Undergraduate Resources", style={'font-size': '18pt'}),
+    html.H2("Department of Economics", style={'font-size': '28pt', 'background-color': '#0051ba'}),
+    html.H3("Undergraduate Resources", style={'font-size': '18pt', 'background-color': '#0051ba'}),
     html.Br(), html.Br(),
     dcc.Tabs([
     dcc.Tab(label='Job Opportunities', children=[
