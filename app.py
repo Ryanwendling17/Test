@@ -62,21 +62,23 @@ app.layout = html.Div(children = [
                  'display': 'inline-flex'}),
         html.Div(
         [
+            html.Div(children = [
             dcc.Dropdown(
                 id="MyPick",
                 options=[{
                     'label': i,
                     'value': i
                 } for i in states],
-                value="KS"),
+                value="KS"),], style={'width': '120px'}),
             
+            html.Div(children = [
             dcc.Dropdown(
                 id="Counterfactual",
                 options=[{
                     'label': i,
                     'value': i
                 } for i in states],
-                value=states[1]),
+                value=states[1]),], style={'width': '120px'}),
             
             
             html.Div(children = [
