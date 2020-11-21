@@ -7,14 +7,15 @@ body{
     border-radius: 15px;
     padding: 10px;
 }
-#StudRe{
-    width: 40%;
+#KuLogo{
+    margin-top: -10px;
+    margin-right: 10.2px;
 }
 h2 {
     color: white;
     padding: 10px;
     margin: -10px;
-    margin-bottom: 0px;
+    margin-bottom: -10px;
 }
 h3 {
     color: white;
