@@ -11,14 +11,14 @@ import plotly.figure_factory as ff
 import plotly.express as px
 import datetime
 from pandas.tseries.offsets import BDay
-import dash_bootstrap_components as dbc
+
 
 
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 #server = app.server
 
 # Populate the layout with HTML and graph components
