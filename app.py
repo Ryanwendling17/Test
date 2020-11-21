@@ -29,7 +29,7 @@ datesCCA = stateUR['Date'].unique().tolist()
 layoutCCA = go.Layout(hovermode = 'closest', margin=dict(l=50, r=50, t=50, b=50))
 
 layout_TS = go.Layout(
-    hovermode = 'closest', margin=dict(l=50, r=50, t=20, b=50))
+    hovermode = 'closest', margin=dict(l=50, r=50, t=30, b=50))
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
