@@ -2,7 +2,7 @@ html{
     background-color: lightgrey;
 }
 label{
-    margin-right: 20%;
+    margin-right: 21.5%;
 }
 .Select.has-value.is-clearable.is-searchable.Select--single{
     width: 120px;
@@ -16,6 +16,9 @@ body{
     margin-top: -10px;
     margin-right: 10.6px;
     margin-left: 0px;
+}
+#Counterfactual{
+    margin-right: 9%;
 }
 #MyPick{
     margin-right: 9%;
