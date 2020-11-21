@@ -1,97 +1,23 @@
 html{
     background-color: lightgrey;
 }
+
 body{
     background-color: white;
     border-radius: 15px;
     padding: 10px;
 }
-#tableCCA {
-    width: 50%;
-}
-#tableAEPCCA {
-    width: 50%;
-}
-#tableIBCCA {
-    width: 50%;
-}
-#funnel-graphCCA{
-    margin-left: -10px;
-}
-#funnel-graphAEPCCA{
-    margin-left: -10px;
-}
-#funnel-graphIBCCA{
-    margin-left: -10px;
-}
-#my-tableCCA{
-    margin-left: -10px;
-}
-#my-tableAEPCCA{
-    margin-left: -10px;
-}
-#my-tableIBCCA{
-    margin-left: -10px;
-}
-#funnel-graph2CCA{
-    margin-left: -10px;
-}
-#funnel-graph2AEPCCA{
-    margin-left: -10px;
-}
-#funnel-graph2IBCCA{
-    margin-left: -10px;
-}
-#my-table2CCA{
-    margin-left: -10px;
-}
-#my-table2AEPCCA{
-    margin-left: -10px;
-}
-#my-table2IBCCA{
-    margin-left: -10px;
-}
-h2 {
-    height: 60px;
-    line-height: 60px;
-    border-bottom: #00aec7 solid;
-    color: #f47b20;
-    background-color: white;
-    border-bottom-left-radius: 15px;
-    padding: 10px;
-}
 
-h4 {
-    color: #f47b20; 
-    border-bottom: thin #00aec7 solid;
-    background-color: white;
-    border-bottom-left-radius: 15px;
+h2 {
+    color: white;
     padding: 10px;
 }
-#namesCCA{
-    width: 25%;
+h3 {
+    color: white;
+    padding: 10px;
 }
-#namesAEPCCA{
-    width: 25%;
-}
-#namesIBCCA{
-    width: 25%;
-}
-#valuesCCA{
-    width: 25%;
-}
-#valuesAEPCCA{
-    width: 25%;
-}
-#valuesIBCCA{
-    width: 25%;
-}
-#pie-chartCCA{
-    width: 60%
-}
-#pie-chartAEPCCA{
-    width: 60%
-}
-#pie-chartIBCCA{
-    width: 60%
+h4 {
+    color: #0051ba; 
+    background-color: white;
+    padding: 10px;
 }
