@@ -7,7 +7,7 @@ dash-html-components==1.1.1
 dash-renderer==1.8.3
 dash-table==4.11.0
 dask==2.11.0
-dash-bootstrap-components==0.10.7
+dash-bootstrap-components
 Flask==1.1.1
 Flask-Compress==1.8.0
 
