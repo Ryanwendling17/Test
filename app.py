@@ -26,7 +26,41 @@ datesCCA = stateUR['Date'].unique().tolist()
 
 
 
-layoutCCA = go.Layout(hovermode = 'closest', margin=dict(l=50, r=50, t=50, b=50))
+#Jobs DF
+
+jobs = pd.DataFrame(columns = ['Title', 'Details', 'id'])
+
+
+newJob1 = {'Title': 'Professor Slusky\'s Office Hours', 'Details': 'Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via this link on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)', 'id': 1}
+newJob2 = {'Title': '2rofessor Slusky\'s Office Hours', 'Details': 'Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via [link](http://kansas.zoom.us/my/davidslusky) on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)', 'id': 2}
+
+newJobs = [newJob1,
+           newJob2]
+
+jobs = jobs.append(newJobs, ignore_index=True)
+jobs = jobs.sort_values(by=['id'], ascending=False)
+
+
+
+
+
+#Student Resources DF
+
+resources = pd.DataFrame(columns = ['Title', 'Details'])
+
+
+newResources1 = {'Title': 'Professor Slusky\'s Office Hours', 'Details': 'Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via [link](http://kansas.zoom.us/my/davidslusky) on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)'}
+newResources2 = {'Title': 'Ryan Wendling\'s Office Hours', 'Details': 'Ryan is a senior economics student who works for Professor Slusky. He is also available via Zoom this semester to answer any questions you may have about the economics department. You can access his office hours via this [link](https://kansas.zoom.us/j/96482325564) on Mondays and Fridays from 3-5 pm. (Password: 102891)'}
+newResources3 = {'Title': 'Stata Webinar: Creating customized reports in Word, Excel, and PDF', 'Details': 'Join Gabriela Ortiz, Applied Statistician, as she demonstrates how to create Word documents with Stata summary statistics, regression tables, and graphs. Find out how to interact Stata\'s features with Word\'s features and how to automate your work when you want to regularly update reports. You will also see how easy it is to use putpdf and putexcel to similarly create reproducible reports in PDF and Excel formats. Register for this free event [here](https://www.stata.com/training/webinar/reproducible-reporting-putdocx/).'}
+
+newResources = [newResources1,
+                newResources2,
+                newResources3]
+
+resources = resources.append(newResources, ignore_index=True)
+
+
+
 
 layout_TS = go.Layout(
     hovermode = 'closest', margin=dict(l=50, r=50, t=30, b=50))
@@ -48,8 +82,8 @@ app.layout = html.Div(children = [
     dcc.Tabs([
     dcc.Tab(label='Job Opportunities', children=[
     html.Div(children = [
-    html.H4("Professor Slusky’s Office Hours", style={'font-size': '16pt'}),
-        html.P('Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via this link on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)'),
+    html.H4(jobs.iloc[0, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(jobs.iloc[0, 1])),
     ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
     html.Div(children = [
        dcc.Graph(id = 'PlayerComWeek'),
@@ -113,16 +147,16 @@ app.layout = html.Div(children = [
     ]),
     dcc.Tab(label='Student Resources', children=[
     html.Div(children = [
-    html.H4("Professor Slusky’s Office Hours", style={'font-size': '16pt'}),
-        html.P('Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via this link on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)'),
+    html.H4(resources.iloc[0, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(resources.iloc[0, 1])),
     ],style={'display': 'inline-block', 'width': '40%'}),
     html.Div(children = [
-        html.H4("Ryan Wendling’s Office Hours", style={'font-size': '16pt'}),
-        html.P('Ryan is a senior economics student who works for Professor Slusky. He is also available via Zoom this semester to answer any questions you may have about the economics department. You can access his office hours via this link on Mondays and Fridays from 3-5 pm.  (Password: 102891)'),
+        html.H4(resources.iloc[1, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(resources.iloc[1, 1])),
     ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px'}),
     html.Div(children = [
-        html.H4("Stata Webinar: Creating customized reports in Word, Excel, and PDF", style={'font-size': '16pt'}),
-        html.P('Join Gabriela Ortiz, Applied Statistician, as she demonstrates how to create Word documents with Stata summary statistics, regression tables, and graphs. Find out how to interact Stata\'s features with Word\'s features and how to automate your work when you want to regularly update reports. You will also see how easy it is to use putpdf and putexcel to similarly create reproducible reports in PDF and Excel formats. Register for this free event here.'),
+        html.H4(resources.iloc[2, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(resources.iloc[2, 1])),
     ],style={'display': 'inline-block', 'width': '40%'}),
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Departmental Events', children=[
