@@ -11,11 +11,21 @@ body{
 h2 {
     color: white;
     padding: 10px;
+    margin: -10px;
+    margin-bottom: 0px;
 }
 h3 {
     color: white;
     padding: 10px;
+    margin: -10px;
+    margin-top: -12px;
 }
+
+.jsx-4017309047.tab-container{
+    width: 50%;
+    margin-top: 15px;
+}
+
 h4 {
     color: #0051ba; 
     background-color: white;
