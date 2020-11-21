@@ -78,7 +78,7 @@ app.layout = html.Div(children = [
         html.Div(children = [
             html.Label("Player 1"),
             html.Label("Player 2")
-        ], style={'margin-right':'20%',
+        ], style={'width':'100%',
                  'display': 'inline-flex'}),
         html.Div(
         [
