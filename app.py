@@ -27,28 +27,32 @@ for state in statesdf['State']:
         data = fred.get_series(state+'UR', observation_start='2019-01-01')
         data = pd.DataFrame(data) 
         data.reset_index(drop = False, inplace = True)
-        data.rename(columns={"index": "Date", 0: "UR"}, inplace = True)
+        data.rename(columns={"index": "Date", 0: "Unemployment Rate"}, inplace = True)
         data['State'] = state
+        data['varb'] = 'Unemployment Rate'
+        stateUR = stateUR.append(data, ignore_index=True)
+    except:
+        pass
+    try:
+        data = fred.get_series(state+'RPIPC', observation_start='2014-01-01')
+        data = pd.DataFrame(data) 
+        data.reset_index(drop = False, inplace = True)
+        data.rename(columns={"index": "Date", 0: "Real Per Capita Personal Income"}, inplace = True)
+        data['State'] = state
+        data['varb'] = 'Real Per Capita Personal Income'
         stateUR = stateUR.append(data, ignore_index=True)
     except:
         pass
 
+metrics = stateUR['varb'].unique().tolist()
+
 datesCCA = stateUR['Date'].unique().tolist()
 
 
-KS = stateUR[stateUR['State'] == 'KS'] 
-trace_1CCA = go.Scatter(x = KS.Date, y = KS['UR'],
-                    name = 'KS Unemployment Rate',
-                    line = dict(width = 2,
-                                color = 'rgb(229, 151, 50)'))
-layoutCCA = go.Layout(hovermode = 'closest', margin=dict(l=50, r=50, t=20, b=50))
+
+layoutCCA = go.Layout(hovermode = 'closest', margin=dict(l=50, r=50, t=50, b=50))
 figCCA = go.Figure(data = [trace_1CCA], layout = layoutCCA)
 layout_TS = go.Layout(
-                      yaxis=dict(
-    title=dict(
-      text='Unemployement Rate'
-    )
-  ),
     hovermode = 'closest', margin=dict(l=50, r=50, t=20, b=50))
 
 
@@ -76,7 +80,8 @@ app.layout = html.Div(children = [
     # dropdown
         html.Div(children = [
             html.Label("State 1"),
-            html.Label("State 2")
+            html.Label("State 2"),
+            html.Label("Metric")
         ], style={'width':'100%',
                  'display': 'inline-flex'}),
         html.Div(
@@ -96,6 +101,14 @@ app.layout = html.Div(children = [
                     'value': i
                 } for i in states],
                 value=states[1]),
+            
+            dcc.Dropdown(
+                id="METRIC",
+                options=[{
+                    'label': i,
+                    'value': i
+                } for i in metrics],
+                value="Unemployment Rate"),
         ],
         style={'width': '100%',
                'margin-right':'20%',
@@ -149,13 +162,15 @@ app.layout = html.Div(children = [
 #Add callback functions
 @app.callback(Output('PlayerComWeek', 'figure'),
              [Input('MyPick', 'value'),
-             Input('Counterfactual', 'value')])
-def update_figure(input1, input2):
+             Input('Counterfactual', 'value'),
+             Input('METRIC', 'value')])
+def update_figure(input1, input2, input3):
     # filtering the data
-    data1 = stateUR[stateUR.State == input1]
-    data2 = stateUR[stateUR.State == input2]
+    data  = stateUR[stateUR.varb == input3]
+    data1 = data[data.State == input1]
+    data2 = data[data.State == input2]
     # updating the plot
-    trace_1 = go.Scatter(x = data1.Date, y = data1["UR"]/100,
+    trace_1 = go.Scatter(x = data1.Date, y = data1[input3],
                         name = input1,
                          mode='lines+markers',
                          marker={
@@ -164,7 +179,7 @@ def update_figure(input1, input2):
                 'line': {'width': 0.5, 'color': 'white'}
             }
                         )
-    trace_2 = go.Scatter(x = data2.Date, y = data2["UR"]/100,
+    trace_2 = go.Scatter(x = data2.Date, y = data2[input3],
                         name = input2,
                          mode='lines+markers',
                         marker={
@@ -173,9 +188,10 @@ def update_figure(input1, input2):
                 'line': {'width': 0.5, 'color': 'white'}
             })
     figCCA = go.Figure(data = [trace_1, trace_2], layout = layout_TS)
-    figCCA.update_layout(yaxis_tickformat = ",.0%")
+    if input3 == 'Unemployment Rate':
+        figCCA.update_layout(yaxis_ticksuffix = "%")
+    figCCA.update_layout(title_text=input3)
     return figCCA
-  
   
 
 
