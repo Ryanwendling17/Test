@@ -4,6 +4,9 @@ html{
 label{
     margin-right: 20%;
 }
+.Select.has-value.is-clearable.is-searchable.Select--single{
+    width: 120px;
+}
 body{
     background-color: white;
     border-radius: 15px;
@@ -15,7 +18,7 @@ body{
     margin-left: 0px;
 }
 #MyPick{
-    margin-right: 17.5%;
+    margin-right: 9%;
 }
 h2 {
     color: white;
