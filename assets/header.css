@@ -7,7 +7,9 @@ body{
     border-radius: 15px;
     padding: 10px;
 }
-
+#StudRe{
+    width: 40%;
+}
 h2 {
     color: white;
     padding: 10px;
