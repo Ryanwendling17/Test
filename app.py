@@ -132,7 +132,7 @@ app.layout = html.Div(children = [
          html.Div(children = [
         html.H4(jobs.iloc[1, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(jobs.iloc[1, 1])),
-    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top', 'margin-top': '-21.5%'}),
+    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top', 'margin-top': '-22.5%'}),
         
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
