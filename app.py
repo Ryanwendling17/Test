@@ -31,20 +31,15 @@ app.layout = html.Div(children = [
     ], style={'width':'100%', 'margin-right': '-10px'}),], style={'display': 'inline-flex', 'width':'100%', 'margin-left': '-10px'}),
     dcc.Tabs([
     dcc.Tab(label='Job Opportunities', children=[
-    html.Div(html.Div(
-    [
-        dbc.Row(
-            [
-                dbc.Col(html.Div(children = [
-    html.H4("Beyond KU: Careers in Politics ", style={'font-size': '16pt'}),
-        html.P('Sponsored by the University Career Center and the Dole Institute for Politics, this event will demonstrate how to turn your passion for politics into a career regardless of your major. From a legislative aide and policy analyst to a political reporter and lobbyist, there are dozens of careers available. Join this panel discussion and learn how to jumpstart a career working in politics alongside elected officials. You can join the live stream via Facebook or YouTube this Tuesday, November 17th at 3:00 pm.'),
-    ]), width={"size": 5, "order": 1}),
-                dbc.Col(html.Div("One of three columns"), width={"size": 5, "order": 2}),
-            ]
-        ),
-    ]
-),),
-    ]),
+    html.Div(children = [
+    html.H4("Beyond KU: Careers in Politics", style={'font-size': '16pt'}),
+        html.P('Sponsored by the University Career Center and the Dole Institute for Politics, this event will demonstrate how to turn your passion for politics into a career regardless of your major. From a legislative aide and policy analyst to a political reporter and lobbyist, there are dozens of careers available. Join this panel discussion and learn how to jumpstart a career working in politics alongside elected officials. You can join the live stream via Facebook or YouTube this Tuesday, November 17th at 3:00 pm. '),
+    ],style={'display': 'inline-block', 'width': '40%'}),
+    html.Div(children = [
+        html.H4("Ryan Wendling’s Office Hours", style={'font-size': '16pt'}),
+        html.P('Ryan is a senior economics student who works for Professor Slusky. He is also available via Zoom this semester to answer any questions you may have about the economics department. You can access his office hours via this link on Mondays and Fridays from 3-5 pm.  (Password: 102891)'),
+    ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px'}),
+    ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
     html.H4("Undergraduate Resources2", style={'font-size': '16pt'}),
     ]),
