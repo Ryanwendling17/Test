@@ -1,7 +1,9 @@
 html{
     background-color: lightgrey;
 }
-
+label{
+    margin-right: 20%;
+}
 body{
     background-color: white;
     border-radius: 15px;
@@ -11,6 +13,9 @@ body{
     margin-top: -10px;
     margin-right: 10.6px;
     margin-left: 0px;
+}
+#MyPick{
+    margin-right: 20%;
 }
 h2 {
     color: white;
