@@ -69,7 +69,7 @@ app.layout = html.Div(children = [
                     'label': i,
                     'value': i
                 } for i in states],
-                value="KS"),], style={'margin-right':'20%','width': '120px'}),
+                value="KS"),], style={'margin-right':'75px','width': '120px'}),
             
             html.Div(children = [
             dcc.Dropdown(
@@ -78,7 +78,7 @@ app.layout = html.Div(children = [
                     'label': i,
                     'value': i
                 } for i in states],
-                value=states[1]),], style={'margin-right':'20%','width': '120px'}),
+                value=states[1]),], style={'margin-right':'75px','width': '120px'}),
             
             
             html.Div(children = [
@@ -88,7 +88,7 @@ app.layout = html.Div(children = [
                     'label': i,
                     'value': i
                 } for i in metrics],
-                value="Unemployment Rate"),], style={'margin-right':'20%','width': '300px'}),
+                value="Unemployment Rate"),], style={'width': '300px'}),
         ],
         style={'width': '100%',
                'margin-right':'20%',
