@@ -14,43 +14,21 @@ from pandas.tseries.offsets import BDay
 from fredapi import Fred
 
 
-api_key = 'c275198525f07f75104d93784a5644ff'
-states = ['AL',	'AK',	'AZ',	'AR',	'CA',	'CO',	'CT',	'DE',	'FL',	'GA',	'HI',	'ID',	'IL',	'IN',	'IA',	'KS',	'KY',	'LA',	'ME',	'MD',	'MA',	'MI',	'MN',	'MS',	'MO',	'MT',	'NE',	'NV',	'NH',	'NJ',	'NM',	'NY',	'NC',	'ND',	'OH',	'OK',	'OR',	'PA',	'RI',	'SC',	'SD',	'TN',	'TX',	'UT',	'VT',	'VA',	'WA',	'WV',	'WI',	'WY']
-statesdf = pd.DataFrame(states, columns = ['State']) 
 
-fred = Fred(api_key=api_key)
+url = 'https://raw.githubusercontent.com/Ryanwendling17/Test/main/Data/labor_data.csv'
+stateUR = pd.read_csv(url, error_bad_lines=False)
 
-stateUR = pd.DataFrame()
-
-for state in statesdf['State']:
-    try:
-        data = fred.get_series(state+'UR', observation_start='2019-01-01')
-        data = pd.DataFrame(data) 
-        data.reset_index(drop = False, inplace = True)
-        data.rename(columns={"index": "Date", 0: "Unemployment Rate"}, inplace = True)
-        data['State'] = state
-        data['varb'] = 'Unemployment Rate'
-        stateUR = stateUR.append(data, ignore_index=True)
-    except:
-        pass
-    try:
-        data = fred.get_series(state+'RPIPC', observation_start='2014-01-01')
-        data = pd.DataFrame(data) 
-        data.reset_index(drop = False, inplace = True)
-        data.rename(columns={"index": "Date", 0: "Real Per Capita Personal Income"}, inplace = True)
-        data['State'] = state
-        data['varb'] = 'Real Per Capita Personal Income'
-        stateUR = stateUR.append(data, ignore_index=True)
-    except:
-        pass
 
 metrics = stateUR['varb'].unique().tolist()
 
 datesCCA = stateUR['Date'].unique().tolist()
 
 
+
+layoutCCA = go.Layout(hovermode = 'closest', margin=dict(l=50, r=50, t=50, b=50))
+
 layout_TS = go.Layout(
-    hovermode = 'closest', margin=dict(l=50, r=50, t=50, b=50))
+    hovermode = 'closest', margin=dict(l=50, r=50, t=20, b=50))
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
