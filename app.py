@@ -70,7 +70,7 @@ app.layout = html.Div(children = [
     html.Div(children = [
     html.H4("Professor Slusky’s Office Hours", style={'font-size': '16pt'}),
         html.P('Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via this link on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)'),
-    ],style={'display': 'inline-block', 'width': '40%'}),
+    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
     html.Div(children = [
        dcc.Graph(id = 'PlayerComWeek'),
     # dropdown
