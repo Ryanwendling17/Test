@@ -13,7 +13,8 @@ import datetime
 from pandas.tseries.offsets import BDay
 from fredapi import Fred
 
-
+states = ['AL',	'AK',	'AZ',	'AR',	'CA',	'CO',	'CT',	'DE',	'FL',	'GA',	'HI',	'ID',	'IL',	'IN',	'IA',	'KS',	'KY',	'LA',	'ME',	'MD',	'MA',	'MI',	'MN',	'MS',	'MO',	'MT',	'NE',	'NV',	'NH',	'NJ',	'NM',	'NY',	'NC',	'ND',	'OH',	'OK',	'OR',	'PA',	'RI',	'SC',	'SD',	'TN',	'TX',	'UT',	'VT',	'VA',	'WA',	'WV',	'WI',	'WY']
+statesdf = pd.DataFrame(states, columns = ['State']) 
 
 url = 'https://raw.githubusercontent.com/Ryanwendling17/Test/main/Data/labor_data.csv'
 stateUR = pd.read_csv(url, error_bad_lines=False)
