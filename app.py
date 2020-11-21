@@ -43,7 +43,7 @@ app.layout = html.Div(children = [
     dcc.Tab(label='Departmental Events', children=[
     html.H4("Undergraduate Resources4", style={'font-size': '16pt'}),
     ]),
-    dcc.Tab(label='What an Economist Looks Like', children=[
+    dcc.Tab(label='Other', children=[
     html.H4("Undergraduate Resources5", style={'font-size': '16pt'}),
     ]),]),
     
