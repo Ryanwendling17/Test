@@ -31,8 +31,8 @@ datesCCA = stateUR['Date'].unique().tolist()
 jobs = pd.DataFrame(columns = ['Title', 'Details', 'id'])
 
 
-newJob1 = {'Title': 'Professor Slusky\'s Office Hours', 'Details': 'Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via this link on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)', 'id': 1}
-newJob2 = {'Title': '2rofessor Slusky\'s Office Hours', 'Details': 'Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via [link](http://kansas.zoom.us/my/davidslusky) on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)', 'id': 2}
+newJob1 = {'Title': 'Research Assistant, Federal Reserve Bank of Chicago', 'Details': 'In this role, Research Assistants will utilize analytical skills in the areas of Economics, Finance, Statistics, Mathematics and Computer Science to support academic research and policy work by staff economists. Tasks include quantitative research analyses using economic and financial data; computer programming; preparation of briefings and educational outreach materials; and financial and economic database management. View application requirements and apply [here!](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Fnam02.safelinks.protection.outlook.com%2F%3Furl%3Dhttps*3A*2F*2Ffrb.taleo.net*2Fcareersection*2Fjobdetail.ftl*3Fjob*3D265213*26lang*3Den*23.X1Jks6jqy6o.mailto%26data%3D02*7C01*7Cmigarciaperez*40stcloudstate.edu*7Cfef5b3aa20924c04e1ef08d854d3b173*7C5011c7c60ab446ab9ef4fae74a921a7f*7C0*7C1*7C637352615503270729%26sdata%3DevRUvYu751TTcH65voyyGkrRYcCje2JZ1TmrQVh1k1I*3D%26reserved%3D0__%3BJSUlJSUlJSUlJSUlJSUlJSUlJQ!!PhOWcWs!h3MBHaOUp9lHzyv1mv-lKMvTyR34TIfKwP9PqF5Qku6-O9oNQt56vfwdsQjjBylXTT0%24&data=02%7C01%7Casiedu%40ku.edu%7Cc5b6ab0121ce4db6c23c08d854f73c93%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C0%7C637352768193288377&sdata=HVxu57DX65LssBX8wBDJsfiMw%2Bfu2DZ04NUGM97RAhM%3D&reserved=0)', 'id': 1}
+newJob2 = {'Title': 'Beyond KU: Careers in Politics', 'Details': 'Sponsored by the University Career Center and the Dole Institute for Politics, this event will demonstrate how to turn your passion for politics into a career regardless of your major. From a legislative aide and policy analyst to a political reporter and lobbyist, there are dozens of careers available. Join this panel discussion and learn how to jumpstart a career working in politics alongside elected officials. You can join the live stream via [Facebook](https://www.facebook.com/kucareer) or [YouTube](https://www.youtube.com/c/TheDoleInstituteofPolitics/) this Tuesday, November 17th at 3:00 pm.', 'id': 2}
 
 newJobs = [newJob1,
            newJob2]
@@ -127,20 +127,13 @@ app.layout = html.Div(children = [
         style={'width': '100%',
                'margin-right':'20%',
                'display': 'inline-flex'}),
-    
-                   
-    # range slider
-    #html.P([
-    #    html.Label("Time Period"),
-    #    dcc.RangeSlider(id = 'sliderCCA',
-    #                    marks = {i : datesCCA[i] for i in range(0, len(datesCCA))},
-    #                    min = 0,
-    #                    max = len(datesCCA),
-    #                    value = [1, len(datesCCA)])
-     #       ], style = {'width' : '90%',
-    #                    'fontSize' : '18px',
-    #                    'padding-left' : '100px'}),
     ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px', 'margin-top': '30px'}),
+        
+         html.Div(children = [
+        html.H4(jobs.iloc[1, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(jobs.iloc[1, 1])),
+    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top', 'margin-top': '-21.5%'}),
+        
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
     html.H4("Undergraduate Resources2", style={'font-size': '16pt'}),
