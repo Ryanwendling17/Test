@@ -32,15 +32,15 @@ app.layout = html.Div(children = [
     html.H4("Undergraduate Resources2", style={'font-size': '16pt'}),
     ]),
     dcc.Tab(label='Student Resources', children=[
-    html.Div(children = [
+    html.Div(id='StudRe', children = [
     html.H4("Professor Slusky’s Office Hours", style={'font-size': '16pt'}),
         html.P('Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via this link on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)'),
     ],style={'display': 'inline-block'}),
-    html.Div(children = [
+    html.Div(id='StudRe', children = [
         html.H4("Ryan Wendling’s Office Hours", style={'font-size': '16pt'}),
         html.P('Ryan is a senior economics student who works for Professor Slusky. He is also available via Zoom this semester to answer any questions you may have about the economics department. You can access his office hours via this link on Mondays and Fridays from 3-5 pm.  (Password: 102891)'),
     ],style={'display': 'inline-block'}),
-    html.Div(children = [
+    html.Div(id='StudRe', children = [
         html.H4("Stata Webinar: Creating customized reports in Word, Excel, and PDF", style={'font-size': '16pt'}),
         html.P('Join Gabriela Ortiz, Applied Statistician, as she demonstrates how to create Word documents with Stata summary statistics, regression tables, and graphs. Find out how to interact Stata\'s features with Word\'s features and how to automate your work when you want to regularly update reports. You will also see how easy it is to use putpdf and putexcel to similarly create reproducible reports in PDF and Excel formats. Register for this free event here.'),
     ],style={'display': 'inline-block'}),
