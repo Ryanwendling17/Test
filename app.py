@@ -76,8 +76,8 @@ app.layout = html.Div(children = [
     # dropdown
         html.Br(),
         html.Div(children = [
-            html.Label("Player 1"),
-            html.Label("Player 2")
+            html.Label("State 1"),
+            html.Label("State 2")
         ], style={'width':'100%',
                  'display': 'inline-flex'}),
         html.Div(
