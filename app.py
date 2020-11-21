@@ -22,7 +22,7 @@ server = app.server
 # Populate the layout with HTML and graph components
 app.layout = html.Div(children = [
     html.Div(children = [
-        html.Img(id='KuLogo', src='assets/KuLogo.png'),
+        html.Img(id='KuLogo', src='https://ibb.co/Nm84wMh'),
     html.Div(children = [
     html.H2("Department of Economics", style={'font-size': '28pt', 'background-color': '#0051ba'}),
     html.H3("Undergraduate Resources", style={'font-size': '18pt', 'background-color': '#0051ba'}),
