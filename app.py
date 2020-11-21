@@ -74,7 +74,6 @@ app.layout = html.Div(children = [
     html.Div(children = [
        dcc.Graph(id = 'PlayerComWeek'),
     # dropdown
-        html.Br(),
         html.Div(children = [
             html.Label("State 1"),
             html.Label("State 2")
