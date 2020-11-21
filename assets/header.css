@@ -4,9 +4,6 @@ html{
 label{
     margin-right: 21.5%;
 }
-.Select.has-value.is-clearable.is-searchable.Select--single{
-    width: 120px;
-}
 body{
     background-color: white;
     border-radius: 15px;
