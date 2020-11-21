@@ -43,14 +43,10 @@ trace_1CCA = go.Scatter(x = KS.Date, y = KS['UR'],
                                 color = 'rgb(229, 151, 50)'))
 layoutCCA = go.Layout(hovermode = 'closest', margin=dict(l=50, r=50, t=20, b=50))
 figCCA = go.Figure(data = [trace_1CCA], layout = layoutCCA)
-layout_TS = go.Layout(xaxis=dict(
-    title=dict(
-      text='Week'
-    )
-  ),
+layout_TS = go.Layout(
                       yaxis=dict(
     title=dict(
-      text='Fantasy Points'
+      text='Unemployement Rate'
     )
   ),
     hovermode = 'closest', margin=dict(l=50, r=50, t=20, b=50))
