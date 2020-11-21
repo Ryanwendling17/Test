@@ -11,6 +11,24 @@ import plotly.figure_factory as ff
 import plotly.express as px
 import datetime
 from pandas.tseries.offsets import BDay
+from fredapi import Fred
+
+
+api_key = 'c275198525f07f75104d93784a5644ff'
+states = ['AL',	'AK',	'AZ',	'AR',	'CA',	'CO',	'CT',	'DE',	'FL',	'GA',	'HI',	'ID',	'IL',	'IN',	'IA',	'KS',	'KY',	'LA',	'ME',	'MD',	'MA',	'MI',	'MN',	'MS',	'MO',	'MT',	'NE',	'NV',	'NH',	'NJ',	'NM',	'NY',	'NC',	'ND',	'OH',	'OK',	'OR',	'PA',	'RI',	'SC',	'SD',	'TN',	'TX',	'UT',	'VT',	'VA',	'WA',	'WV',	'WI',	'WY']
+states = pd.DataFrame(states, columns = ['State']) 
+
+fred = Fred(api_key=api_key)
+
+stateUR = pd.DataFrame()
+
+for state in states['State']:
+    data = fred.get_series(state+'UR', observation_start='2018-01-01')
+    data = pd.DataFrame(data) 
+    data.reset_index(drop = False, inplace = True)
+    data.rename(columns={"index": "Date", 0: "UR"}, inplace = True)
+    data['State'] = state
+    stateUR = stateUR.append(data, ignore_index=True)
 
 
 
