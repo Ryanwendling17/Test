@@ -11,13 +11,15 @@ import plotly.figure_factory as ff
 import plotly.express as px
 import datetime
 from pandas.tseries.offsets import BDay
+import dash_bootstrap_components as dbc
+
 
 
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
-server = app.server
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+#server = app.server
 
 # Populate the layout with HTML and graph components
 app.layout = html.Div(children = [
@@ -29,7 +31,19 @@ app.layout = html.Div(children = [
     ], style={'width':'100%', 'margin-right': '-10px'}),], style={'display': 'inline-flex', 'width':'100%', 'margin-left': '-10px'}),
     dcc.Tabs([
     dcc.Tab(label='Job Opportunities', children=[
-    html.H4("Undergraduate Resources1", style={'font-size': '16pt'}),
+    html.Div(html.Div(
+    [
+        dbc.Row(
+            [
+                dbc.Col(html.Div(children = [
+    html.H4("Beyond KU: Careers in Politics ", style={'font-size': '16pt'}),
+        html.P('Sponsored by the University Career Center and the Dole Institute for Politics, this event will demonstrate how to turn your passion for politics into a career regardless of your major. From a legislative aide and policy analyst to a political reporter and lobbyist, there are dozens of careers available. Join this panel discussion and learn how to jumpstart a career working in politics alongside elected officials. You can join the live stream via Facebook or YouTube this Tuesday, November 17th at 3:00 pm.'),
+    ]), width={"size": 5, "order": 1}),
+                dbc.Col(html.Div("One of three columns"), width={"size": 5, "order": 2}),
+            ]
+        ),
+    ]
+),),
     ]),
     dcc.Tab(label='Academic Opportunities', children=[
     html.H4("Undergraduate Resources2", style={'font-size': '16pt'}),
