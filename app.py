@@ -26,7 +26,7 @@ app.layout = html.Div(children = [
     html.Div(children = [
     html.H2("Department of Economics", style={'font-size': '28pt', 'background-color': '#0051ba'}),
     html.H3("Undergraduate Resources", style={'font-size': '18pt', 'background-color': '#0051ba'}),
-    ], style={'width':'100%'}),], style={'display': 'inline-flex', 'width':'100%', 'margin-left': '-10px'}),
+    ], style={'width':'100%', 'margin-right': '-10px'}),], style={'display': 'inline-flex', 'width':'100%', 'margin-left': '-10px'}),
     dcc.Tabs([
     dcc.Tab(label='Job Opportunities', children=[
     html.H4("Undergraduate Resources1", style={'font-size': '16pt'}),
