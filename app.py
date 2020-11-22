@@ -128,6 +128,21 @@ Academic = Academic.sort_values(by=['id'], ascending=False)
 
 
 
+#Department DF
+
+Department = pd.DataFrame(columns = ['Title', 'Details', 'id'])
+
+
+newDepartment1 = {'Title': 'Economics Club', 'Details': 'The Economics Club is back and meeting regularly Thursday evenings at 6:00 PM via Zoom. Join the meetings using this [link](https://kansas.zoom.us/j/95313313570), the password is 2020. There will be a number of great events this year so anyone interested in economics, coding, or research should consider getting involved. No official joining process is required, simply start coming to meetings when you can!', 'id': 2}
+
+newDepartment = [newDepartment1]
+
+Department = Department.append(newDepartment, ignore_index=True)
+Department = Department.sort_values(by=['id'], ascending=False)
+
+
+
+
 #Student Resources DF
 
 resources = pd.DataFrame(columns = ['Title', 'Details'])
@@ -362,7 +377,12 @@ app.layout = html.Div(children = [
     ],style={'display': 'inline-block', 'width': '40%'}),
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Departmental Events', children=[
-    html.H4("Undergraduate Resources4", style={'font-size': '16pt'}),
+    
+    html.Div(children = [
+        html.H4(Department.iloc[0, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(Department.iloc[0, 1])),
+    ],style={'display': 'inline-block', 'width': '40%'}),
+        
     ]),
     dcc.Tab(label='Other', children=[
     html.H4("Undergraduate Resources5", style={'font-size': '16pt'}),
