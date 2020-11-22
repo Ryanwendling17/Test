@@ -424,8 +424,8 @@ app.layout = html.Div(children = [
     ],style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
         
     html.Div(children = [
-        html.H4(jobs.iloc[1, 0], style={'font-size': '16pt'}),
-        html.P(dcc.Markdown(jobs.iloc[1, 1])),
+        html.H4(Academic.iloc[1, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(Academic.iloc[1, 1])),
     ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top', 'margin-top': '-18%'}),
         
     ]),
