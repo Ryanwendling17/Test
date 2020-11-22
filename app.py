@@ -417,7 +417,7 @@ app.layout = html.Div(children = [
         
     html.Div(children = [
     html.H4(Academic.iloc[0, 0], style={'font-size': '16pt'}),
-        html.P(dcc.Markdown(jobs.iloc[0, 1])),
+        html.P(dcc.Markdown(Academic.iloc[0, 1])),
     ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
     html.Div(children = [
        dcc.Graph(id = 'EduFig', figure = EduFig),
