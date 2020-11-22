@@ -85,6 +85,73 @@ statesdf = pd.DataFrame(states, columns = ['State'])
 url = 'https://raw.githubusercontent.com/Ryanwendling17/Test/main/Data/labor_data.csv'
 stateUR = pd.read_csv(url, error_bad_lines=False)
 
+url = 'https://raw.githubusercontent.com/Ryanwendling17/Test/main/Data/EconFac.csv'
+final_df = pd.read_csv(url, error_bad_lines=False)
+
+
+
+x = final_df.columns.to_list()
+x = x[0:3]
+
+ku = final_df[final_df['Pop'] == final_df['Pop'][0]]
+del ku['Pop']
+ku = ku.T
+
+ku = final_df[final_df['Pop'] == final_df['Pop'][0]]
+del ku['Pop']
+ku = ku.T
+
+NatEcon = final_df[final_df['Pop'] == final_df['Pop'][1]]
+del NatEcon['Pop']
+NatEcon = NatEcon.T
+
+Nat = final_df[final_df['Pop'] == final_df['Pop'][2]]
+del Nat['Pop']
+Nat = Nat.T
+
+fig = go.Figure(data=[
+    go.Bar(name=final_df['Pop'][0], x=x, y=ku[0], text = ku, marker=dict(
+        color='rgba(39, 103, 255, 0.6)',
+        line=dict(
+            color='rgba(39, 103, 255, 1.0)',
+            width=1),
+    ),),
+    go.Bar(name=final_df['Pop'][1], x=x, y=NatEcon[1], text = NatEcon,     marker=dict(
+        color='rgba(255, 48, 66, 0.6)',
+        line=dict(
+            color='rgba(255, 48, 66, 1.0)',
+            width=1),
+    ),),
+    go.Bar(name=final_df['Pop'][2], x=x, y=Nat[2], text = Nat, marker=dict(
+        color='rgba(50, 171, 96, 0.6)',
+        line=dict(
+            color='rgba(50, 171, 96, 1.0)',
+            width=1),
+    ),)
+])
+
+# Source
+annotations = []
+annotations.append(dict(xref='paper', yref='paper',
+                        x=-.05, y=-0.24,
+                        text='Econ Source: Faculty Page, University of Kansas, Department of Economics, November 2020'+
+                             '<br>National Econ Source: American Economic Association, Committee on the Status of Women in the Economics Profession (CSWEP) Annual Report, 2019'+
+                             '<br>National All Dept. Source: U.S. Department of Education, National Center for Education Statistics, Integrated Postsecondary Education Data System (IPEDS) 2019',
+                        font=dict(family='Arial', size=10, color='rgb(150,150,150)'),
+                        align="left",
+                        showarrow=False))
+
+# Change the bar mode
+fig.update_layout(barmode='group', title_text = 'Percent of Faculty who are Women', yaxis_ticksuffix = "%", 
+                  annotations=annotations, 
+                      margin=dict(l=20, r=20, t=70, b=90),
+                  paper_bgcolor='rgb(248, 248, 255)',
+                  plot_bgcolor='rgb(248, 248, 255)',)
+fig.update_traces(texttemplate='%{text}'+'%', textposition='outside')
+
+EconFacFig = fig
+
+
 
 metrics = stateUR['varb'].unique().tolist()
 
@@ -245,7 +312,7 @@ fig.update_layout(
         side='top',
     ),
     legend=dict(x=0.029, y=1.038, font_size=10),
-    margin=dict(l=100, r=20, t=70, b=70),
+    margin=dict(l=20, r=20, t=70, b=90),
     paper_bgcolor='rgb(248, 248, 255)',
     plot_bgcolor='rgb(248, 248, 255)',
 )
@@ -273,7 +340,7 @@ for ydn, yd, xd in zip(y_nw, y_s, x):
                             showarrow=False))
 # Source
 annotations.append(dict(xref='paper', yref='paper',
-                        x=-0.2, y=-0.109,
+                        x=-.05, y=-0.24,
                         text='Source: Current Population Survey, U.S. Department of Labor, U.S. Bureau of Labor Statistics',
                         font=dict(family='Arial', size=10, color='rgb(150,150,150)'),
                         showarrow=False))
@@ -385,11 +452,21 @@ app.layout = html.Div(children = [
         
     ]),
     dcc.Tab(label='Other', children=[
-    html.H4("Undergraduate Resources5", style={'font-size': '16pt'}),
-    ]),]),
+    
+      html.Div(children = [
+    html.H4('Economics\' Gender Problem', style={'font-size': '16pt'}),
+        html.P(dcc.Markdown('Our field has always had a gender imbalance problem, but unlike other social sciences, economics has been closing the gender gap at an incredibly slow rate. The University of Kansas is not immune to these issues. In recent years, the KU economics faculty male/female ratio has grown to be more in line with the national economics average but compared to the average academic department we still fall far behind. Bias against women has an outsized negative influence on our profession both nationally and at KU. In 2019, the American Economic Association ([AEA]( chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https:/www.aeaweb.org/resources/member-docs/climate-survey-results-mar-18-2019)) surveyed over 9,000 current and former AEA members, finding roughly half of women respondents have experienced discrimination and nearly two-thirds feel their work is taken less seriously than their male counterparts. Female students often report harassment and discrimination, and female faculty face higher standards in their research and tend to be given worse student evaluations than male instructors. ([Boring, 2017]( https://doi.org/10.1016/j.jpubeco.2016.11.006))\n\nThe economics undergraduate committee is concerned with the gender disparities evident in our field and in our department at KU. We are working to combat these issues, and to begin to address other issues of gender discrimination that our trans and non-binary students may be facing. Specifically, this past year we have worked to increase mentoring efforts for undergraduate women, increase female representation, and introduce gender neutral bathrooms to Snow Hall. Committee leadership has completed KU Safe Space training so please feel comfortable reaching out with any questions or concerns you might have. ')),
+    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
+        html.Div(children = [
+       dcc.Graph(figure = EconFacFig),
+        ], style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
+
+ 
+        
+    ]),]),])
     
     
-      ])
+      
 
 
 
