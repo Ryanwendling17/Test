@@ -9,6 +9,9 @@ body{
     border-radius: 15px;
     padding: 10px;
 }
+#PlayerComWeek{
+    width: 50%;
+}
 #KuLogo{
     margin-top: -10px;
     margin-right: 10.6px;
