@@ -110,6 +110,24 @@ jobs = jobs.sort_values(by=['id'], ascending=False)
 
 
 
+#Academic DF
+
+Academic = pd.DataFrame(columns = ['Title', 'Details', 'id'])
+
+
+newAcademic1 = {'Title': 'AEA Summer Training Program & Scholarship Program', 'Details': 'This promotes diversity by preparing talented undergraduates for doctoral programs in Economics and related disciplines. Hosted at Howard University, students receive eight weeks of intensive training in microeconomics, mathematics, econometrics, and research methods from prominent faculty and economists at the Federal Reserve Board. Students have the opportunity to earn up to 12 college credits, participate in experiential learning, and join inclusive mentoring groups. Click [here](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Fnam04.safelinks.protection.outlook.com%2F%3Furl%3Dhttp*3A*2F*2Feconomics.howard.edu*2Faeasp%26data%3D02*7C01*7Coswinton*40howard.edu*7C81b4fb3379bf47a0c0ce08d853f42e90*7C02ac0c07b75f46bf9b133630ba94bb69*7C0*7C0*7C637351655503414001%26sdata%3DLPjHIX1nN2B*2BBbL*2FKDIzP7mIggZRZEUGDSJ9OGwmBjE*3D%26reserved%3D0__%3BJSUlJSUlJSUlJSUlJSUl!!PhOWcWs!hDAWigW9ZLzgDbXtU2NbcAz5D9pmuRIVF2giTw1Buee2sAZi_JpQW4Z5k7AxNc_a33g%24&data=02%7C01%7Casiedu%40ku.edu%7C3d6c0492c81f4c2c8a1a08d86a2a9e91%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C1%7C637376078584039853&sdata=EiaEfmjtQUlxpBUcT%2FJjERnx%2FielhfWP07w4c1me5MY%3D&reserved=0) for more information and to apply. The anticipated application deadline is January 31, 2021. )', 'id': 1}
+newAcademic2 = {'Title': 'Tobin Center / Economics Pre-Doctoral Fellows Program', 'Details': 'The Tobin Center / Economics Pre-Doctoral Fellows Program at Yale University supports policy-relevant economics research by providing a high-quality education and training experience for individuals with bachelor’s or master’s degrees who are considering pursuing a Ph.D. in economics or a closely related discipline. Pre-doctoral fellows work for one to two years as full-time research assistants for one or more faculty mentors and engage in additional education and training activities, including taking for credit or auditing one course per semester, participating in a weekly professional development seminar, and attending department research seminars. Apply [here.](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Ftobin.yale.edu%2Ftobin-predoctoral-fellows__%3B!!PhOWcWs!jgtuBlPYZUhcZsuq2BCp1J7HO9xcsDVUylMmANH2Dd0wz5R2rkXMVxCl6VX6jbHcKw%24&data=04%7C01%7Casiedu%40ku.edu%7C5d754ba2bf2e4b6c841b08d87f498477%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C0%7C637399301025987936%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=U1tg00Wtn%2Fg4Qb7F6V2NWCJkgA49fYr6X3NCbx5WIvM%3D&reserved=0)', 'id': 2}
+
+newAcademic = [newAcademic1,
+               newAcademic2]
+
+Academic = Academic.append(newAcademic, ignore_index=True)
+Academic = Academic.sort_values(by=['id'], ascending=False)
+
+
+
+
+
 #Student Resources DF
 
 resources = pd.DataFrame(columns = ['Title', 'Details'])
@@ -316,13 +334,17 @@ app.layout = html.Div(children = [
     dcc.Tab(label='Academic Opportunities', children=[
         
     html.Div(children = [
-    html.H4(jobs.iloc[0, 0], style={'font-size': '16pt'}),
+    html.H4(Academic.iloc[0, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(jobs.iloc[0, 1])),
     ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
     html.Div(children = [
        dcc.Graph(id = 'EduFig', figure = EduFig),
     ],style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
         
+    html.Div(children = [
+        html.H4(jobs.iloc[1, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(jobs.iloc[1, 1])),
+    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top', 'margin-top': '-18%'}),
         
     ]),
     dcc.Tab(label='Student Resources', children=[
