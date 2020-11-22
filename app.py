@@ -12,6 +12,72 @@ import plotly.express as px
 import datetime
 from pandas.tseries.offsets import BDay
 from fredapi import Fred
+import lxml.html as lh
+
+
+
+url='https://www.bls.gov/emp/tables/unemployment-earnings-education.htm'
+#Create a handle, page, to handle the contents of the website
+page = requests.get(url)
+#Store the contents of the website under doc
+doc = lh.fromstring(page.content)
+#Parse data that are stored between <tr>..</tr> of HTML
+tr_elements = doc.xpath('//tr')
+
+#Check the length of the first 12 rows
+[len(T) for T in tr_elements[:12]]
+
+tr_elements = doc.xpath('//tr')
+#Create empty list
+col=[]
+i=0
+#For each row, store each first element (header) and an empty list
+for t in tr_elements[0]:
+    i+=1
+    name=t.text_content()
+    col.append((name,[]))
+    
+#Since out first row is the header, data is stored on the second row onwards
+for j in range(1,len(tr_elements)):
+    #T is our j'th row
+    T=tr_elements[j]
+    
+    #If row is not of size 10, the //tr data is not from our table 
+    if len(T)!=3:
+        break
+    
+    #i is the index of our column
+    i=0
+    
+    #Iterate through each element of the row
+    for t in T.iterchildren():
+        data=t.text_content() 
+        #Check if row is empty
+        if i>0:
+        #Convert any numerical value to integers
+            try:
+                data=int(data)
+            except:
+                pass
+        #Append the data to the empty list of the i'th column
+        col[i][1].append(data)
+        #Increment i for the next column
+        i+=1
+        
+Dict={title:column for (title,column) in col}
+EdEconDf=pd.DataFrame(Dict)
+EdEconDf = EdEconDf.astype(str)
+
+
+EdEconDf.rename(columns=lambda x: x.replace('\r\n',''), inplace = True)
+for col in EdEconDf.columns:
+    EdEconDf[col] = EdEconDf[col].apply(lambda x: x.replace('\r\n',''))
+    EdEconDf[col] = EdEconDf[col].apply(lambda x: x.replace(',',''))
+    
+EdEconDf['Unemployment rate (%)'] = EdEconDf['Unemployment rate (%)'].astype(float)
+EdEconDf['Median usual weekly earnings ($)'] = EdEconDf['Median usual weekly earnings ($)'].astype(int)
+    
+EdEconDf = EdEconDf.loc[0:7]
 
 states = ['AL',	'AK',	'AZ',	'AR',	'CA',	'CO',	'CT',	'DE',	'FL',	'GA',	'HI',	'ID',	'IL',	'IN',	'IA',	'KS',	'KY',	'LA',	'ME',	'MD',	'MA',	'MI',	'MN',	'MS',	'MO',	'MT',	'NE',	'NV',	'NH',	'NJ',	'NM',	'NY',	'NC',	'ND',	'OH',	'OK',	'OR',	'PA',	'RI',	'SC',	'SD',	'TN',	'TX',	'UT',	'VT',	'VA',	'WA',	'WV',	'WI',	'WY']
 statesdf = pd.DataFrame(states, columns = ['State']) 
@@ -70,6 +136,118 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 server = app.server
+
+
+#Edu Fig
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+
+import numpy as np
+
+y_UR = EdEconDf['Unemployment rate (%)'].tolist()
+y_Earn = EdEconDf['Median usual weekly earnings ($)'].tolist()
+
+x = EdEconDf['Educational attainment'].tolist()
+
+
+# Creating two subplots
+fig = make_subplots(rows=1, cols=2, specs=[[{}, {}]], shared_xaxes=True,
+                    shared_yaxes=False, vertical_spacing=0.001)
+
+fig.append_trace(go.Bar(
+    x=y_UR,
+    y=x,
+    marker=dict(
+        color='rgba(255, 48, 66, 0.6)',
+        line=dict(
+            color='rgba(255, 48, 66, 1.0)',
+            width=1),
+    ),
+    name='Unemployment Rate',
+    orientation='h',
+), 1, 1)
+
+fig.append_trace(go.Bar(
+    x=y_Earn,
+    y=x,
+    marker=dict(
+        color='rgba(39, 103, 255, 0.6)',
+        line=dict(
+            color='rgba(39, 103, 255, 1.0)',
+            width=1),
+    ),
+    name='Median Usual Weekly Earnings',
+    orientation='h',
+), 1, 2)
+
+fig.update_layout(
+    title='Unemployment Rates and Earnings by Educational Attainment',
+    yaxis=dict(
+        showgrid=False,
+        showline=False,
+        showticklabels=True,
+        domain=[0, 0.85],
+    ),
+    yaxis2=dict(
+        showgrid=False,
+        showline=True,
+        showticklabels=False,
+        linecolor='rgba(102, 102, 102, 0.8)',
+        linewidth=2,
+        domain=[0, 0.85],
+    ),
+    xaxis=dict(
+        zeroline=False,
+        showline=False,
+        showticklabels=True,
+        showgrid=True,
+        domain=[0, 0.42],
+    ),
+    xaxis2=dict(
+        zeroline=False,
+        showline=False,
+        showticklabels=True,
+        showgrid=True,
+        domain=[0.47, 1],
+        side='top',
+    ),
+    legend=dict(x=0.029, y=1.038, font_size=10),
+    margin=dict(l=100, r=20, t=70, b=70),
+    paper_bgcolor='rgb(248, 248, 255)',
+    plot_bgcolor='rgb(248, 248, 255)',
+)
+
+annotations = []
+
+y_s = np.round(y_UR, decimals=2)
+y_nw = np.round(y_Earn, decimals=0)
+
+# Adding labels
+for ydn, yd, xd in zip(y_nw, y_s, x):
+    # labeling the scatter savings
+    annotations.append(dict(xref='x2', yref='y2',
+                            y=xd, x=ydn + 160,
+                            text='$'+'{:,}'.format(ydn) ,
+                            font=dict(family='Arial', size=12,
+                                      color='rgb(0, 52, 89)'),
+                            showarrow=False))
+    # labeling the bar net worth
+    annotations.append(dict(xref='x1', yref='y1',
+                            y=xd, x=yd + .5,
+                            text=str(yd) + '%',
+                            font=dict(family='Arial', size=12,
+                                      color='rgb(151, 27, 47)'),
+                            showarrow=False))
+# Source
+annotations.append(dict(xref='paper', yref='paper',
+                        x=-0.2, y=-0.109,
+                        text='Source: Current Population Survey, U.S. Department of Labor, U.S. Bureau of Labor Statistics',
+                        font=dict(family='Arial', size=10, color='rgb(150,150,150)'),
+                        showarrow=False))
+
+EduFig = fig.update_layout(annotations=annotations)
+
+
 
 # Populate the layout with HTML and graph components
 app.layout = html.Div(children = [
@@ -132,11 +310,20 @@ app.layout = html.Div(children = [
          html.Div(children = [
         html.H4(jobs.iloc[1, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(jobs.iloc[1, 1])),
-    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top', 'margin-top': '-22.5%'}),
+    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top', 'margin-top': '-21.5%'}),
         
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
-    html.H4("Undergraduate Resources2", style={'font-size': '16pt'}),
+        
+    html.Div(children = [
+    html.H4(jobs.iloc[0, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(jobs.iloc[0, 1])),
+    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
+    html.Div(children = [
+       dcc.Graph(id = 'EduFig', figure = EduFig),
+    ],style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
+        
+        
     ]),
     dcc.Tab(label='Student Resources', children=[
     html.Div(children = [
