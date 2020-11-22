@@ -305,7 +305,7 @@ app.layout = html.Div(children = [
         style={'width': '100%',
                'margin-right':'20%',
                'display': 'inline-flex'}),
-    ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px', 'margin-top': '30px'}),
+    ],style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
         
          html.Div(children = [
         html.H4(jobs.iloc[1, 0], style={'font-size': '16pt'}),
