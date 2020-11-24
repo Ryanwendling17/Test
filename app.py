@@ -37,7 +37,7 @@ search_words = "#EconTwitter" + " -filter:retweets"
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(5000)
+                       lang="en").items(50)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
@@ -347,6 +347,25 @@ resources = resources.append(newResources, ignore_index=True)
 
 
 
+#Media DF
+
+Media = pd.DataFrame(columns = ['Title', 'Details'])
+
+
+newMedia1 = {'Title': 'Econ Twitter!', 'Details': 'If you\'re not already on Econ Twitter and have any interest in economics at all, then you should be! Econ twitter is a loosely defined community of economics professors, students, researchers, and enthusiast who tweet about cool new papers, issues in the field, economic policy, and lots of cats and dogs. A good place to get started on Econ Twitter is to follow these people:\n \n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - [@causalinf]( https://twitter.com/causalinf?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - [@leah_boustan]( https://twitter.com/leah_boustan?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@jenniferdoleac]( https://twitter.com/jenniferdoleac?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@JustinWolfers]( https://twitter.com/JustinWolfers?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@graykimbrough]( https://twitter.com/graykimbrough?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@ENPancotti]( https://twitter.com/ENPancotti?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@drlisadcook]( https://twitter.com/drlisadcook?s=20) \n\n New members are embraced so feel free to start tweeting using #EconTwitter, but lurkers are more than welcome so don\'t be afraid to just follow and enjoy the community!'}
+newMedia2 = {'Title': 'What an Economist Looks Like', 'Details': 'Economics has a well-documented diversity problem. In this section, we hope to demonstrate that economists can (and should) come from all walks of life while producing high-quality research. This week, we\'re highlighting KU\'s own Professor Elizabeth Asiedu. Read her bio [here.](http://people.ku.edu/~asiedu/) '}
+newMedia3 = {'Title': 'What We\'re Listening to This Week', 'Details': 'Capitalisn\'t is a podcast led by Professor Kate Waldock from Georgetown University and Professor Luigi Zingales from the University of Chicago. They debunk common misconceptions of capitalism, where it goes wrong, and how it impacts the world we live in. In [this]( https://www.capitalisnt.com/episodes/the-capitalisnt-of-vaccines) episode, they discuss how capitalism will impact the dissemination of the COVID-19 vaccine.'}
+
+newMedia = [newMedia1,
+            newMedia2,
+            newMedia3]
+
+Media = Media.append(newMedia, ignore_index=True)
+
+
+
+
+
 layout_TS = go.Layout(
     hovermode = 'closest', margin=dict(l=50, r=50, t=30, b=50))
 
@@ -570,6 +589,43 @@ app.layout = html.Div(children = [
     ],style={'display': 'inline-block', 'width': '40%'}),
         
     ]),
+        
+        dcc.Tab(label='Media', children=[
+    
+      html.Div(children = [
+html.H4(Media.iloc[0, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(Media.iloc[0, 1])),
+    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
+            
+            html.Div(children = [
+                dcc.Graph(id = 'TwitterGraph'),
+ 
+            
+        html.Div(children = [
+            dcc.Dropdown(
+                id="TweetVar",
+                options=[{
+                    'label': i,
+                    'value': i
+                } for i in ['Location', 'Users']],
+                value="Location"),], style={'width': '300px'}),
+                
+                ], style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
+       
+            
+        html.Div(children = [
+        html.H4(Media.iloc[1, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(Media.iloc[1, 1])),
+    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
+            
+                    html.Div(children = [
+        html.H4(Media.iloc[2, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(Media.iloc[2, 1])),
+    ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px'}),
+            
+    ]),
+        
+        
     dcc.Tab(label='Other', children=[
     
       html.Div(children = [
@@ -580,16 +636,7 @@ app.layout = html.Div(children = [
        dcc.Graph(id = 'EconFac', figure = EconFacFig),
         ], style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
         
-        dcc.Graph(id = 'TwitterGraph'),
- 
-        html.Div(children = [
-            dcc.Dropdown(
-                id="TweetVar",
-                options=[{
-                    'label': i,
-                    'value': i
-                } for i in ['Location', 'Users']],
-                value="Location"),], style={'width': '300px'}),
+
     ]),]),])
     
     
