@@ -689,7 +689,6 @@ def update_figure(input1, input2, input3):
     figCCA.update_layout(title_text=input3)
     return figCCA
   
-app.scripts.append_script({‘external_url’:‘https://ku-econ-undergrad-resources.herokuapp.com//assets/gtag.js’})
 
     
 if __name__ == '__main__':
