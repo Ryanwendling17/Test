@@ -10,11 +10,7 @@ body{
     padding: 10px;
 }
 iframe{
-    height: 200px;
-    width: 100%;
-    frameborder: no;
-    scrolling: no;
-    src: url(https://player.simplecast.com/3f569c22-cd49-4002-9196-61f520232977?dark=false)
+    border:none;
 }
     
 #EconFac{
