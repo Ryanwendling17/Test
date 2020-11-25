@@ -37,7 +37,7 @@ search_words = "#EconTwitter" + " -filter:retweets"
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(50)
+                       lang="en").items(5000)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
@@ -353,7 +353,7 @@ Media = pd.DataFrame(columns = ['Title', 'Details'])
 
 
 newMedia1 = {'Title': 'Econ Twitter!', 'Details': 'If you\'re not already on Econ Twitter and have any interest in economics at all, then you should be! Econ twitter is a loosely defined community of economics professors, students, researchers, and enthusiast who tweet about cool new papers, issues in the field, economic policy, and lots of cats and dogs. A good place to get started on Econ Twitter is to follow these people:\n \n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - [@causalinf]( https://twitter.com/causalinf?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - [@leah_boustan]( https://twitter.com/leah_boustan?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@jenniferdoleac]( https://twitter.com/jenniferdoleac?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@JustinWolfers]( https://twitter.com/JustinWolfers?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@graykimbrough]( https://twitter.com/graykimbrough?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@ENPancotti]( https://twitter.com/ENPancotti?s=20) \n\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  - [@drlisadcook]( https://twitter.com/drlisadcook?s=20) \n\n New members are embraced so feel free to start tweeting using #EconTwitter, but lurkers are more than welcome so don\'t be afraid to just follow and enjoy the community!'}
-newMedia2 = {'Title': 'What an Economist Looks Like', 'Details': 'Economics has a well-documented diversity problem. In this section, we hope to demonstrate that economists can (and should) come from all walks of life while producing high-quality research. This week, we\'re highlighting KU\'s own Professor Elizabeth Asiedu. Read her bio [here.](http://people.ku.edu/~asiedu/) '}
+newMedia2 = {'Title': 'What an Economist Looks Like', 'Details': 'Representation matters, and due to economics\' diversity problem along both racial and gender lines, many very talented people from diverse backgrounds never get to see themselves represented in our field. At the end of the day, economics is about people, and driving people away from our field who bring a wide array of research interests and perspectives hurts our profession and society. *What an Economist Looks Like* is an Econ Twitter initiative to increase the representation of women and underrepresented minorities in economics. Our first featured economist is our very own Professor Elizabeth Asiedu. Professor Asiedu is an Associate Chair, Director of Graduate Studies, and the founder and president of the Association for the Advancement of African Women Economists ([AAAWE]( http://www.aaawe.org/)). Professor Asiedu is the recipient of the 2020 [Sadie Collective]( https://www.sadiecollective.org/) award for Academic Scholarship and Mentorship. Professor Asiedu\'s research focuses on Foreign Direct Investment, Foreign Aid, and Gender. You can read more about Professor Asiedu [here.]( http://people.ku.edu/~asiedu/)'}
 newMedia3 = {'Title': 'What We\'re Listening to This Week', 'Details': 'Capitalisn\'t is a podcast led by Professor Kate Waldock from Georgetown University and Professor Luigi Zingales from the University of Chicago. They debunk common misconceptions of capitalism, where it goes wrong, and how it impacts the world we live in. In [this]( https://www.capitalisnt.com/episodes/the-capitalisnt-of-vaccines) episode, they discuss how capitalism will impact the dissemination of the COVID-19 vaccine.'}
 
 newMedia = [newMedia1,
@@ -615,6 +615,7 @@ html.H4(Media.iloc[0, 0], style={'font-size': '16pt'}),
             
         html.Div(children = [
         html.H4(Media.iloc[1, 0], style={'font-size': '16pt'}),
+        html.Img(id='WhatAnEconLooksLike', src='https://kulogo.s3.us-east-2.amazonaws.com/ElizabethAsiedu.jpeg', style={'width': '33%', 'float': 'left', 'margin-top': '5px'}),
         html.P(dcc.Markdown(Media.iloc[1, 1])),
     ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
             
