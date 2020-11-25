@@ -622,7 +622,7 @@ html.H4(Media.iloc[0, 0], style={'font-size': '16pt'}),
                     html.Div(children = [
         html.H4(Media.iloc[2, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(Media.iloc[2, 1])),
-        html.Iframe(),
+        html.Iframe(height="200px", width="100%",  src="https://player.simplecast.com/3f569c22-cd49-4002-9196-61f520232977?dark=false"),
     ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px'}),
             
     ]),
