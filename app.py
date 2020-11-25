@@ -691,7 +691,7 @@ def update_figure(input1, input2, input3):
     figCCA.update_layout(title_text=input3)
     return figCCA
   
-
+app.title('KU Econ Undergrad Resources')
     
 if __name__ == '__main__':
     app.run_server(debug=False)
