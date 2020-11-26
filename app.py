@@ -37,7 +37,7 @@ search_words = "#EconTwitter" + " -filter:retweets"
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(5000)
+                       lang="en").items(5)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
@@ -694,6 +694,33 @@ def update_figure(input1, input2, input3):
     return figCCA
   
 app.title('KU Econ Undergrad Resources')
+
+app.index_string = """<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-15C7GNBCP3"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'G-RX0YGPMQKW');
+        </script>
+        {%metas%}
+        <title>{%title%}</title>
+        {%favicon%}
+        {%css%}
+    </head>
+    <body>
+        {%app_entry%}
+        <footer>
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </footer>
+    </body>
+</html>"""
     
 if __name__ == '__main__':
     app.run_server(debug=False)
