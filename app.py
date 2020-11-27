@@ -624,7 +624,7 @@ html.H4(Media.iloc[0, 0], style={'font-size': '16pt'}),
         html.Img(id='WhatAnEconLooksLike', src='https://kulogo.s3.us-east-2.amazonaws.com/ElizabethAsiedu.jpeg', style={'width': '33%', 'float': 'left', 'margin-top': '10px'}),
         html.P(dcc.Markdown(Media.iloc[1, 1])),
             
-    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left', 'margin-top': '41px'}),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left', 'margin-top': '30px'}),
             
             html.Div(children = [
         html.H4(),
@@ -646,10 +646,10 @@ html.H4(Media.iloc[0, 0], style={'font-size': '16pt'}),
       html.Div(children = [
     html.H4('Economics\' Gender Problem', style={'font-size': '16pt'}),
         html.P(dcc.Markdown('Our field has always had a gender imbalance problem, but unlike other social sciences, economics has been closing the gender gap at an incredibly slow rate. The University of Kansas is not immune to these issues. In recent years, the KU economics faculty male/female ratio has grown to be more in line with the national economics average but compared to the average academic department we still fall far behind. Bias against women has an outsized negative influence on our profession both nationally and at KU. In 2019, the American Economic Association ([AEA]( chrome-extension://oemmndcbldboiebfnladdacbdfmadadm/https:/www.aeaweb.org/resources/member-docs/climate-survey-results-mar-18-2019)) surveyed over 9,000 current and former AEA members, finding roughly half of women respondents have experienced discrimination and nearly two-thirds feel their work is taken less seriously than their male counterparts. Female students often report harassment and discrimination, and female faculty face higher standards in their research and tend to be given worse student evaluations than male instructors. ([Boring, 2017]( https://doi.org/10.1016/j.jpubeco.2016.11.006))\n\nThe economics undergraduate committee is concerned with the gender disparities evident in our field and in our department at KU. We are working to combat these issues, and to begin to address other issues of gender discrimination that our trans and non-binary students may be facing. Specifically, this past year we have worked to increase mentoring efforts for undergraduate women, increase female representation, and introduce gender neutral bathrooms to Snow Hall. Committee leadership has completed KU Safe Space training so please feel comfortable reaching out with any questions or concerns you might have. ')),
-    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top'}),
         html.Div(children = [
        dcc.Graph(id = 'EconFac', figure = EconFacFig),
-        ], style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
+        ], style={'display': 'inline-block', 'max-width': '100%', 'min-width': '55%', 'margin-top': '30px', 'float':'right'}),
         
 
     ]),]),])
