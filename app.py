@@ -37,7 +37,7 @@ search_words = "#EconTwitter" + " -filter:retweets"
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(5000)
+                       lang="en").items(5)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
@@ -500,7 +500,7 @@ app.layout = html.Div(children = [
     html.Div(children = [
     html.H4(jobs.iloc[0, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(jobs.iloc[0, 1])),
-    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top'}),
     html.Div(children = [
        dcc.Graph(id = 'PlayerComWeek'),
     # dropdown
@@ -543,12 +543,12 @@ app.layout = html.Div(children = [
         style={'width': '100%',
                'margin-right':'20%',
                'display': 'inline-flex'}),
-    ],style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
+    ],style={'display': 'inline-block', 'max-width': '100%', 'margin-top': '30px', 'float':'right'}),
         
          html.Div(children = [
         html.H4(jobs.iloc[1, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(jobs.iloc[1, 1])),
-    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top', 'margin-top': '-21.5%'}),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left'}),
         
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
@@ -556,30 +556,34 @@ app.layout = html.Div(children = [
     html.Div(children = [
     html.H4(Academic.iloc[0, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(Academic.iloc[0, 1])),
-    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top'}),
     html.Div(children = [
        dcc.Graph(id = 'EduFig', figure = EduFig),
-    ],style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px'}),
+    ],style={'display': 'inline-block', 'max-width': '100%', 'min-width':'55%', 'float': 'right', 'margin-top': '30px'}),
         
     html.Div(children = [
         html.H4(Academic.iloc[1, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(Academic.iloc[1, 1])),
-    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top', 'margin-top': '-15%'}),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float': 'left'}),
         
     ]),
     dcc.Tab(label='Student Resources', children=[
     html.Div(children = [
     html.H4(resources.iloc[0, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(resources.iloc[0, 1])),
-    ],style={'display': 'inline-block', 'width': '40%'}),
+    ],style={'display': 'inline-block', 'max-width': '600px'}),
+        html.Div(children = [
+        html.H4(),
+        
+    ],style={'display': 'inline-block','width':'100px','max-width': '600px','float': 'inherit'}),
     html.Div(children = [
         html.H4(resources.iloc[1, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(resources.iloc[1, 1])),
-    ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px'}),
+    ],style={'display': 'inline-block', 'max-width': '600px'}),
     html.Div(children = [
         html.H4(resources.iloc[2, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(resources.iloc[2, 1])),
-    ],style={'display': 'inline-block', 'width': '40%'}),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'float':'left'}),
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Departmental Events', children=[
     
@@ -595,7 +599,7 @@ app.layout = html.Div(children = [
       html.Div(children = [
 html.H4(Media.iloc[0, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(Media.iloc[0, 1])),
-    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top'}),
             
             html.Div(children = [
                 dcc.Graph(id = 'TwitterGraph'),
@@ -610,21 +614,28 @@ html.H4(Media.iloc[0, 0], style={'font-size': '16pt'}),
                 } for i in ['Location', 'Users']],
                 value="Location"),], style={'width': '300px'}),
                 
-                ], style={'display': 'inline-block', 'width': '50%', 'margin-left': '100px', 'margin-top': '30px', 
-                          'background-color': 'rgb(248, 248, 255)', 'padding-bottom': '5px', 'padding-left': '5px'}),
+                ], style={'display': 'inline-block', 'min-width': '50%', 'max-width': '100%', 'margin-top': '30px', 
+                          'background-color': 'rgb(248, 248, 255)', 'padding-bottom': '5px', 'padding-left': '5px', 
+                          'float': 'right'}),
        
             
         html.Div(children = [
         html.H4(Media.iloc[1, 0], style={'font-size': '16pt'}),
         html.Img(id='WhatAnEconLooksLike', src='https://kulogo.s3.us-east-2.amazonaws.com/ElizabethAsiedu.jpeg', style={'width': '33%', 'float': 'left', 'margin-top': '10px'}),
         html.P(dcc.Markdown(Media.iloc[1, 1])),
-    ],style={'display': 'inline-block', 'width': '40%', 'vertical-align': 'top'}),
+            
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left', 'margin-top': '41px'}),
+            
+            html.Div(children = [
+        html.H4(),
+        
+    ],style={'display': 'inline-block','width':'100px','max-width': '600px','float': 'inherit'}),
             
                     html.Div(children = [
         html.H4(Media.iloc[2, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(Media.iloc[2, 1])),
         html.Iframe(height="200px", width="100%",  src="https://player.simplecast.com/3f569c22-cd49-4002-9196-61f520232977?dark=false"),
-    ],style={'display': 'inline-block', 'width': '40%', 'margin-left': '100px'}),
+    ],style={'display': 'inline-block', 'max-width': '600px',   'margin-left': '9.7%'}),
         
             
     ]),
