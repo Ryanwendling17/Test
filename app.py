@@ -624,7 +624,7 @@ html.H4(Media.iloc[0, 0], style={'font-size': '16pt'}),
         html.Img(id='WhatAnEconLooksLike', src='https://kulogo.s3.us-east-2.amazonaws.com/ElizabethAsiedu.jpeg', style={'width': '33%', 'float': 'left', 'margin-top': '10px'}),
         html.P(dcc.Markdown(Media.iloc[1, 1])),
             
-    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left', 'margin-top': '30px'}),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left', 'margin-top': '12px'}),
             
             html.Div(children = [
         html.H4(),
