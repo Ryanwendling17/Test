@@ -21,8 +21,8 @@ from flask import request
 import time
 
 
-consumer_key = 'DJKAOHAJzkG5JOsMSdSL1LUHL' 
-consumer_secret = 'NZDLH50VVSNyx2tIx8qZ2bRsh3N6wtlKJxTy62ETlJmDScdWT9' 
+consumer_key = 'G8PueI9oNJHhpsKZgdi8S9GB0' 
+consumer_secret = 'zUKhkY2GtTjdxUbNQCRsolThgiL7A4ULVjIEWUFRVCDN5QRgfI' 
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 
@@ -37,7 +37,7 @@ search_words = "#EconTwitter" + " -filter:retweets"
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(5000)
+                       lang="en").items(50)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
