@@ -37,7 +37,7 @@ search_words = "#EconTwitter" + " -filter:retweets"
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(50)
+                       lang="en").items(5000)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
@@ -285,9 +285,13 @@ jobs = pd.DataFrame(columns = ['Title', 'Details', 'id'])
 
 newJob1 = {'Title': 'Research Assistant, Federal Reserve Bank of Chicago', 'Details': 'In this role, Research Assistants will utilize analytical skills in the areas of Economics, Finance, Statistics, Mathematics and Computer Science to support academic research and policy work by staff economists. Tasks include quantitative research analyses using economic and financial data; computer programming; preparation of briefings and educational outreach materials; and financial and economic database management. View application requirements and apply [here!](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Fnam02.safelinks.protection.outlook.com%2F%3Furl%3Dhttps*3A*2F*2Ffrb.taleo.net*2Fcareersection*2Fjobdetail.ftl*3Fjob*3D265213*26lang*3Den*23.X1Jks6jqy6o.mailto%26data%3D02*7C01*7Cmigarciaperez*40stcloudstate.edu*7Cfef5b3aa20924c04e1ef08d854d3b173*7C5011c7c60ab446ab9ef4fae74a921a7f*7C0*7C1*7C637352615503270729%26sdata%3DevRUvYu751TTcH65voyyGkrRYcCje2JZ1TmrQVh1k1I*3D%26reserved%3D0__%3BJSUlJSUlJSUlJSUlJSUlJSUlJQ!!PhOWcWs!h3MBHaOUp9lHzyv1mv-lKMvTyR34TIfKwP9PqF5Qku6-O9oNQt56vfwdsQjjBylXTT0%24&data=02%7C01%7Casiedu%40ku.edu%7Cc5b6ab0121ce4db6c23c08d854f73c93%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C0%7C637352768193288377&sdata=HVxu57DX65LssBX8wBDJsfiMw%2Bfu2DZ04NUGM97RAhM%3D&reserved=0)', 'id': 1}
 newJob2 = {'Title': 'Agricultural Economist', 'Details': 'This position at the USDA in Kansas City, MO involves collecting, processing, and interpreting raw data to determine the significance of the findings. You will clean, analyze, and manage large complex datasets, and utilize the following statistical or data management software to conduct economic analyses: Excel; SAS, Stata or other statistical software; R Python, SQL or other equivalent programming languages; and Tableau or other data visualizations software. Apply [here!]( https://www.usajobs.gov/GetJob/ViewDetails/581486800)', 'id': 2}
+newJob3 = {'Title': 'Bain & Company\'s Building Entrepreneurial Leaders Program', 'Details': 'The BEL program is focused on giving top undergraduate sophomore (2nd year) students of Black/African American, Hispanic/Latinx and American Indian descent the opportunity to strengthen their business and leadership skill set while gaining exposure to Bain & Company, one of the world’s top tier strategy consulting firms. The BEL application will be available from January 11th to February 28th. To learn more about the BEL program, attend a virtual information session on [January 26th]( https://careers.bain.com/recruits/EventDetail?folderId=39126) at 7PM CT, [February 10th]( https://careers.bain.com/recruits/EventDetail?folderId=39127) at 7PM CT, or [February 22nd]( https://careers.bain.com/recruits/EventDetail?folderId=39128) at 11AM CT. Please use these links to sign up in advance.', 'id': 3}
+newJob4 = {'Title': 'Student Administrative Assistant', 'Details': 'The Institute for Policy & Social Research is looking for a student administrative assistant. The student in this position provides general office support and assists staff members with data entry, data and file management, and other research project tasks. Note that this position will begin on a remote-work basis and will transition to in-person when the IPSR office reopens. This is a great opportunity for those interested in research, as you will gain exposure to specific research projects and learn about the research process in general. [Apply here!]( https://sjobs.brassring.com/TGnewUI/Search/home/HomeWithPreLoad?partnerid=25752&siteid=5542&PageType=JobDetails&jobid=4154548#jobDetails=4154548_5542)', 'id': 4}
 
 newJobs = [newJob1,
-           newJob2]
+           newJob2,
+           newJob3,
+           newJob4]
 
 jobs = jobs.append(newJobs, ignore_index=True)
 jobs = jobs.sort_values(by=['id'], ascending=False)
@@ -336,7 +340,7 @@ resources = pd.DataFrame(columns = ['Title', 'Details'])
 
 newResources1 = {'Title': 'Professor Slusky\'s Office Hours', 'Details': 'Professor Slusky is the director of undergraduate studies in the economics department. Feel free to drop by his office hours this semester via Zoom if you have any questions about the economics program. You can access his office hours via [link](http://kansas.zoom.us/my/davidslusky) on Tuesdays from 2-4 pm and on Thursdays from 9-11 am. (Password: 1115)'}
 newResources2 = {'Title': 'Ryan Wendling\'s Office Hours', 'Details': 'Ryan is a senior economics student who works for Professor Slusky. He is also available via Zoom this semester to answer any questions you may have about the economics department. You can access his office hours via this [link](https://kansas.zoom.us/j/96482325564) on Mondays and Fridays from 3-5 pm. (Password: 102891)'}
-newResources3 = {'Title': 'Stata Webinar: Creating customized reports in Word, Excel, and PDF', 'Details': 'Join Gabriela Ortiz, Applied Statistician, as she demonstrates how to create Word documents with Stata summary statistics, regression tables, and graphs. Find out how to interact Stata\'s features with Word\'s features and how to automate your work when you want to regularly update reports. You will also see how easy it is to use putpdf and putexcel to similarly create reproducible reports in PDF and Excel formats. Register for this free event [here](https://www.stata.com/training/webinar/reproducible-reporting-putdocx/).'}
+newResources3 = {'Title': 'SQL Overview and Exercises', 'Details': 'If you plan to continue to work with data after you graduate, SQL is arguably the most valuable language you can learn. SQL is how large firms process, store, and pull data. This video walks you through a SQL lesson/assignment that you can download and work through [here](https://www.youtube.com/redirect?redir_token=QUFFLUhqa2hCekxQaGF6S0hiN01zSl95M19YbzBaNFJvd3xBQ3Jtc0trWWMxRWFTR01YZ1BPMnFEMnRKdWgtM3lZa2dNaGsxOE5VQk9KMHRJQ3ZIWElKNklxWjhhT1NRZmJWV1RmSFZuZklWWDl3MWhDdjdqbzJrcDFLM2JKNnJTU2JDckRuY2NEbm5ETlBJaGE3aDcyX1p6Yw%3D%3D&v=kEevFRHiJFY&q=https%3A%2F%2Fdrive.google.com%2Fdrive%2Ffolders%2F1ACjKwvDK7i9fSxpD9-R2XpI4IsBrRlZv%3Fusp%3Dsharing&event=video_description). The setup instructions will help you get everything you need downloaded and installed, and the video will walk you through the lesson and answer the exercise questions. This is our first pass at creating instructional coding resources, if you like what you see let us know what other languages you would like resources for!'}
 
 newResources = [newResources1,
                 newResources2,
@@ -550,6 +554,13 @@ app.layout = html.Div(children = [
         html.P(dcc.Markdown(jobs.iloc[1, 1])),
     ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left'}),
         
+        
+                 html.Div(children = [
+        html.H4(jobs.iloc[2, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(jobs.iloc[2, 1])),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left'}),
+        
+        
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
         
@@ -583,6 +594,7 @@ app.layout = html.Div(children = [
     html.Div(children = [
         html.H4(resources.iloc[2, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(resources.iloc[2, 1])),
+        html.Iframe(height="315px", width="100%",  src="https://www.youtube.com/embed/kEevFRHiJFY"),
     ],style={'display': 'inline-block', 'max-width': '600px', 'float':'left'}),
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Departmental Events', children=[
