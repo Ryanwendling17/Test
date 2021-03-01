@@ -37,7 +37,7 @@ search_words = "#EconTwitter" + " -filter:retweets"
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(5)
+                       lang="en").items(5000)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
