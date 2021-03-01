@@ -37,7 +37,7 @@ search_words = "#EconTwitter" + " -filter:retweets"
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(5000)
+                       lang="en").items(5)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
@@ -201,8 +201,35 @@ EdEconDf = EdEconDf.loc[0:7]
 states = ['AL',	'AK',	'AZ',	'AR',	'CA',	'CO',	'CT',	'DE',	'FL',	'GA',	'HI',	'ID',	'IL',	'IN',	'IA',	'KS',	'KY',	'LA',	'ME',	'MD',	'MA',	'MI',	'MN',	'MS',	'MO',	'MT',	'NE',	'NV',	'NH',	'NJ',	'NM',	'NY',	'NC',	'ND',	'OH',	'OK',	'OR',	'PA',	'RI',	'SC',	'SD',	'TN',	'TX',	'UT',	'VT',	'VA',	'WA',	'WV',	'WI',	'WY']
 statesdf = pd.DataFrame(states, columns = ['State']) 
 
-url = 'https://raw.githubusercontent.com/Ryanwendling17/Test/main/Data/labor_data.csv'
-stateUR = pd.read_csv(url, error_bad_lines=False)
+api_key = 'c275198525f07f75104d93784a5644ff'
+states = ['AL',	'AK',	'AZ',	'AR',	'CA',	'CO',	'CT',	'DE',	'FL',	'GA',	'HI',	'ID',	'IL',	'IN',	'IA',	'KS',	'KY',	'LA',	'ME',	'MD',	'MA',	'MI',	'MN',	'MS',	'MO',	'MT',	'NE',	'NV',	'NH',	'NJ',	'NM',	'NY',	'NC',	'ND',	'OH',	'OK',	'OR',	'PA',	'RI',	'SC',	'SD',	'TN',	'TX',	'UT',	'VT',	'VA',	'WA',	'WV',	'WI',	'WY']
+statesdf = pd.DataFrame(states, columns = ['State']) 
+
+fred = Fred(api_key=api_key)
+
+stateUR = pd.DataFrame()
+
+for state in statesdf['State']:
+    try:
+        data = fred.get_series(state+'UR', observation_start='2019-01-01')
+        data = pd.DataFrame(data) 
+        data.reset_index(drop = False, inplace = True)
+        data.rename(columns={"index": "Date", 0: "Unemployment Rate"}, inplace = True)
+        data['State'] = state
+        data['varb'] = 'Unemployment Rate'
+        stateUR = stateUR.append(data, ignore_index=True)
+    except:
+        pass
+    try:
+        data = fred.get_series(state+'RPIPC', observation_start='2014-01-01')
+        data = pd.DataFrame(data) 
+        data.reset_index(drop = False, inplace = True)
+        data.rename(columns={"index": "Date", 0: "Real Per Capita Personal Income"}, inplace = True)
+        data['State'] = state
+        data['varb'] = 'Real Per Capita Personal Income'
+        stateUR = stateUR.append(data, ignore_index=True)
+    except:
+        pass
 
 url = 'https://raw.githubusercontent.com/Ryanwendling17/Test/main/Data/EconFac.csv'
 final_df = pd.read_csv(url, error_bad_lines=False)
@@ -283,15 +310,14 @@ datesCCA = stateUR['Date'].unique().tolist()
 jobs = pd.DataFrame(columns = ['Title', 'Details', 'id'])
 
 
-newJob1 = {'Title': 'Research Assistant, Federal Reserve Bank of Chicago', 'Details': 'In this role, Research Assistants will utilize analytical skills in the areas of Economics, Finance, Statistics, Mathematics and Computer Science to support academic research and policy work by staff economists. Tasks include quantitative research analyses using economic and financial data; computer programming; preparation of briefings and educational outreach materials; and financial and economic database management. View application requirements and apply [here!](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Fnam02.safelinks.protection.outlook.com%2F%3Furl%3Dhttps*3A*2F*2Ffrb.taleo.net*2Fcareersection*2Fjobdetail.ftl*3Fjob*3D265213*26lang*3Den*23.X1Jks6jqy6o.mailto%26data%3D02*7C01*7Cmigarciaperez*40stcloudstate.edu*7Cfef5b3aa20924c04e1ef08d854d3b173*7C5011c7c60ab446ab9ef4fae74a921a7f*7C0*7C1*7C637352615503270729%26sdata%3DevRUvYu751TTcH65voyyGkrRYcCje2JZ1TmrQVh1k1I*3D%26reserved%3D0__%3BJSUlJSUlJSUlJSUlJSUlJSUlJQ!!PhOWcWs!h3MBHaOUp9lHzyv1mv-lKMvTyR34TIfKwP9PqF5Qku6-O9oNQt56vfwdsQjjBylXTT0%24&data=02%7C01%7Casiedu%40ku.edu%7Cc5b6ab0121ce4db6c23c08d854f73c93%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C0%7C637352768193288377&sdata=HVxu57DX65LssBX8wBDJsfiMw%2Bfu2DZ04NUGM97RAhM%3D&reserved=0)', 'id': 1}
-newJob2 = {'Title': 'Agricultural Economist', 'Details': 'This position at the USDA in Kansas City, MO involves collecting, processing, and interpreting raw data to determine the significance of the findings. You will clean, analyze, and manage large complex datasets, and utilize the following statistical or data management software to conduct economic analyses: Excel; SAS, Stata or other statistical software; R Python, SQL or other equivalent programming languages; and Tableau or other data visualizations software. Apply [here!]( https://www.usajobs.gov/GetJob/ViewDetails/581486800)', 'id': 2}
-newJob3 = {'Title': 'Bain & Company\'s Building Entrepreneurial Leaders Program', 'Details': 'The BEL program is focused on giving top undergraduate sophomore (2nd year) students of Black/African American, Hispanic/Latinx and American Indian descent the opportunity to strengthen their business and leadership skill set while gaining exposure to Bain & Company, one of the world’s top tier strategy consulting firms. The BEL application will be available from January 11th to February 28th. To learn more about the BEL program, attend a virtual information session on [January 26th]( https://careers.bain.com/recruits/EventDetail?folderId=39126) at 7PM CT, [February 10th]( https://careers.bain.com/recruits/EventDetail?folderId=39127) at 7PM CT, or [February 22nd]( https://careers.bain.com/recruits/EventDetail?folderId=39128) at 11AM CT. Please use these links to sign up in advance.', 'id': 3}
-newJob4 = {'Title': 'Student Administrative Assistant', 'Details': 'The Institute for Policy & Social Research is looking for a student administrative assistant. The student in this position provides general office support and assists staff members with data entry, data and file management, and other research project tasks. Note that this position will begin on a remote-work basis and will transition to in-person when the IPSR office reopens. This is a great opportunity for those interested in research, as you will gain exposure to specific research projects and learn about the research process in general. [Apply here!]( https://sjobs.brassring.com/TGnewUI/Search/home/HomeWithPreLoad?partnerid=25752&siteid=5542&PageType=JobDetails&jobid=4154548#jobDetails=4154548_5542)', 'id': 4}
+
+newJob1 = {'Title': 'Agricultural Economist', 'Details': 'This position at the USDA in Kansas City, MO involves collecting, processing, and interpreting raw data to determine the significance of the findings. You will clean, analyze, and manage large complex datasets, and utilize the following statistical or data management software to conduct economic analyses: Excel; SAS, Stata or other statistical software; R Python, SQL or other equivalent programming languages; and Tableau or other data visualizations software. Apply [here!]( https://www.usajobs.gov/GetJob/ViewDetails/581486800)', 'id': 1}
+newJob2 = {'Title': 'Bain & Company\'s Texas Womxn\'s Leadership Summit', 'Details': 'Are you an undergraduate sophomore or junior womxn interested in tackling global business challenges in your career? Do you want to learn about how to work and be successful in the consulting industry? Join Bain Texas virtually this spring at our Texas Womxn’s Leadership Summit on April 29th – 30th. The Womxn’s Summit will provide you with the insight needed to thrive as a business leader and be successful as a Bain consultant. Apply [here!](http://bit.ly/21twls)', 'id': 2}
+
 
 newJobs = [newJob1,
            newJob2,
-           newJob3,
-           newJob4]
+          ]
 
 jobs = jobs.append(newJobs, ignore_index=True)
 jobs = jobs.sort_values(by=['id'], ascending=False)
@@ -305,8 +331,8 @@ jobs = jobs.sort_values(by=['id'], ascending=False)
 Academic = pd.DataFrame(columns = ['Title', 'Details', 'id'])
 
 
-newAcademic1 = {'Title': 'AEA Summer Training Program & Scholarship Program', 'Details': 'This promotes diversity by preparing talented undergraduates for doctoral programs in Economics and related disciplines. Hosted at Howard University, students receive eight weeks of intensive training in microeconomics, mathematics, econometrics, and research methods from prominent faculty and economists at the Federal Reserve Board. Students have the opportunity to earn up to 12 college credits, participate in experiential learning, and join inclusive mentoring groups. Click [here](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Fnam04.safelinks.protection.outlook.com%2F%3Furl%3Dhttp*3A*2F*2Feconomics.howard.edu*2Faeasp%26data%3D02*7C01*7Coswinton*40howard.edu*7C81b4fb3379bf47a0c0ce08d853f42e90*7C02ac0c07b75f46bf9b133630ba94bb69*7C0*7C0*7C637351655503414001%26sdata%3DLPjHIX1nN2B*2BBbL*2FKDIzP7mIggZRZEUGDSJ9OGwmBjE*3D%26reserved%3D0__%3BJSUlJSUlJSUlJSUlJSUl!!PhOWcWs!hDAWigW9ZLzgDbXtU2NbcAz5D9pmuRIVF2giTw1Buee2sAZi_JpQW4Z5k7AxNc_a33g%24&data=02%7C01%7Casiedu%40ku.edu%7C3d6c0492c81f4c2c8a1a08d86a2a9e91%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C1%7C637376078584039853&sdata=EiaEfmjtQUlxpBUcT%2FJjERnx%2FielhfWP07w4c1me5MY%3D&reserved=0) for more information and to apply. The anticipated application deadline is January 31, 2021.', 'id': 1}
-newAcademic2 = {'Title': 'Tobin Center / Economics Pre-Doctoral Fellows Program', 'Details': 'The Tobin Center / Economics Pre-Doctoral Fellows Program at Yale University supports policy-relevant economics research by providing a high-quality education and training experience for individuals with bachelor’s or master’s degrees who are considering pursuing a Ph.D. in economics or a closely related discipline. Pre-doctoral fellows work for one to two years as full-time research assistants for one or more faculty mentors and engage in additional education and training activities, including taking for credit or auditing one course per semester, participating in a weekly professional development seminar, and attending department research seminars. Apply [here.](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Ftobin.yale.edu%2Ftobin-predoctoral-fellows__%3B!!PhOWcWs!jgtuBlPYZUhcZsuq2BCp1J7HO9xcsDVUylMmANH2Dd0wz5R2rkXMVxCl6VX6jbHcKw%24&data=04%7C01%7Casiedu%40ku.edu%7C5d754ba2bf2e4b6c841b08d87f498477%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C0%7C637399301025987936%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=U1tg00Wtn%2Fg4Qb7F6V2NWCJkgA49fYr6X3NCbx5WIvM%3D&reserved=0)', 'id': 2}
+newAcademic1 = {'Title': 'Tobin Center / Economics Pre-Doctoral Fellows Program', 'Details': 'The Tobin Center / Economics Pre-Doctoral Fellows Program at Yale University supports policy-relevant economics research by providing a high-quality education and training experience for individuals with bachelor’s or master’s degrees who are considering pursuing a Ph.D. in economics or a closely related discipline. Pre-doctoral fellows work for one to two years as full-time research assistants for one or more faculty mentors and engage in additional education and training activities, including taking for credit or auditing one course per semester, participating in a weekly professional development seminar, and attending department research seminars. Apply [here.](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Furldefense.com%2Fv3%2F__https%3A%2F%2Ftobin.yale.edu%2Ftobin-predoctoral-fellows__%3B!!PhOWcWs!jgtuBlPYZUhcZsuq2BCp1J7HO9xcsDVUylMmANH2Dd0wz5R2rkXMVxCl6VX6jbHcKw%24&data=04%7C01%7Casiedu%40ku.edu%7C5d754ba2bf2e4b6c841b08d87f498477%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C0%7C637399301025987936%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C1000&sdata=U1tg00Wtn%2Fg4Qb7F6V2NWCJkgA49fYr6X3NCbx5WIvM%3D&reserved=0)', 'id': 1}
+newAcademic2 = {'Title': 'Whitcomb Essay Contest', 'Details': 'Submissions should be no longer than 5,000 words and should address "the relationship of knowledge, thought, and action in public affairs and public policy”. The committee interprets this theme broadly. In addition to receiving a $500 cash prize, the winner of the contest will have their name engraved on the Whitcomb plaque at Nunemaker Center. This contest is open to all undergraduates at KU. Further information is available [here.](https://honors.ku.edu/whitcomb-essay-contest)', 'id': 2}
 
 newAcademic = [newAcademic1,
                newAcademic2]
@@ -323,9 +349,12 @@ Academic = Academic.sort_values(by=['id'], ascending=False)
 Department = pd.DataFrame(columns = ['Title', 'Details', 'id'])
 
 
-newDepartment1 = {'Title': 'Economics Club', 'Details': 'The Economics Club is back and meeting regularly Thursday evenings at 6:00 PM via Zoom. Join the meetings using this [link](https://kansas.zoom.us/j/95313313570), the password is 2020. There will be a number of great events this year so anyone interested in economics, coding, or research should consider getting involved. No official joining process is required, simply start coming to meetings when you can!', 'id': 2}
+newDepartment1 = {'Title': 'Economics Club', 'Details': 'The Economics Club is back and meeting regularly Thursday evenings at 6:00 PM via Zoom. Join the meetings using this [link](https://kansas.zoom.us/j/95313313570), the password is 2020. There will be a number of great events this year so anyone interested in economics, coding, or research should consider getting involved. No official joining process is required, simply start coming to meetings when you can!', 'id': 1}
+newDepartment2 = {'Title': 'How to Get a Job During the Pandemic', 'Details': 'Jen Boden (KU Alum) and professional recruiter Chad Montgomery from Ecco Select to discuss “How to Get a Job During the Pandemic.” This seminar will focus on the unwritten rules of searching for a job. Topics will include how to use LinkedIn to get notice and find jobs, how to search for jobs, how to get interviews and what to expect from interviews, how to write a resume that will get you an interview, and how to develop your professional network. The seminar would be appropriate for graduate and undergraduate students. The format will be 10 minutes from Jen and Chad and then Q&A. Please use [this link]( https://kansas.zoom.us/j/98120044055) to attend, the password is 2021.', 'id': 2}
 
-newDepartment = [newDepartment1]
+newDepartment = [newDepartment1,
+                 newDepartment2
+                ]
 
 Department = Department.append(newDepartment, ignore_index=True)
 Department = Department.sort_values(by=['id'], ascending=False)
@@ -554,13 +583,7 @@ app.layout = html.Div(children = [
         html.P(dcc.Markdown(jobs.iloc[1, 1])),
     ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left'}),
         
-        
-                 html.Div(children = [
-        html.H4(jobs.iloc[2, 0], style={'font-size': '16pt'}),
-        html.P(dcc.Markdown(jobs.iloc[2, 1])),
-    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left'}),
-        
-        
+
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
         
@@ -603,6 +626,16 @@ app.layout = html.Div(children = [
         html.H4(Department.iloc[0, 0], style={'font-size': '16pt'}),
         html.P(dcc.Markdown(Department.iloc[0, 1])),
     ],style={'display': 'inline-block', 'max-width': '600px', 'float': 'left'}),
+        
+       html.Div(children = [
+        html.H4(),
+        
+    ],style={'display': 'inline-block','width':'100px','max-width': '600px','float': 'inherit'}),
+        
+        html.Div(children = [
+        html.H4(Department.iloc[1, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(Department.iloc[1, 1])),
+    ],style={'display': 'inline-block', 'max-width': '600px'}),
         
     ]),
         
