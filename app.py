@@ -37,7 +37,7 @@ search_words = "#EconTwitter" + " -filter:retweets"
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(5000)
+                       lang="en").items(4000)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
@@ -63,7 +63,7 @@ Top_Locations.reset_index(drop = True, inplace = True)
 
 
 Top_Locations = Top_Locations.sort_values(by=['count'])
-Top_Locations['percent'] = Top_Locations['count'] / 5000 * 100
+Top_Locations['percent'] = Top_Locations['count'] / 4000 * 100
 x = Top_Locations['percent'].tolist()
 y = Top_Locations['location'].tolist()
 
