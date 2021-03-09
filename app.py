@@ -27,7 +27,7 @@ consumer_secret = 'gmL50vmer9HY7jdvgnnDKpkOv8h5Qy9kpI0A62gD9jXMmsb0Qv'
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 
 
-api = tweepy.API(auth)
+api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
     
 cnt = Counter() 
