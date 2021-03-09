@@ -21,8 +21,8 @@ from flask import request
 import time
 
 
-consumer_key = 'G8PueI9oNJHhpsKZgdi8S9GB0' 
-consumer_secret = 'zUKhkY2GtTjdxUbNQCRsolThgiL7A4ULVjIEWUFRVCDN5QRgfI' 
+consumer_key = 'H3KfvzTKUWkG3AtToVwWGi5Ia' 
+consumer_secret = 'gmL50vmer9HY7jdvgnnDKpkOv8h5Qy9kpI0A62gD9jXMmsb0Qv' 
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 
