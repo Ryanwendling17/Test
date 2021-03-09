@@ -35,104 +35,106 @@ cnt = Counter()
 search_words = "#EconTwitter" + " -filter:retweets"
 
 time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
-tweets = tweepy.Cursor(api.search,
-                       q=search_words,
-                       lang="en").items(5000)
+try:
+    tweets = tweepy.Cursor(api.search,
+                           q=search_words,
+                           lang="en").items(5000)
 
-users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
-
-
-tweet_text = pd.DataFrame(data=users_locs, 
-                    columns=['user', "location"])
-    
-tweet_text['count'] = 1
-
-Top_Users = tweet_text.groupby('user').sum()
-Top_Users.reset_index(drop = False, inplace = True)
-Top_Users[['user', 'count']]
-Top_Users['user'] = '@' + Top_Users['user'].astype(str)
-Top_Users = Top_Users.nlargest(15, 'count')
-Top_Users.reset_index(drop = True, inplace = True)
-
-Top_Locations = tweet_text.groupby('location').sum()
-Top_Locations.reset_index(drop = False, inplace = True)
-Top_Locations[['location', 'count']]
-Top_Locations = Top_Locations[Top_Locations['location'] != ''] 
-Top_Locations = Top_Locations.nlargest(15, 'count')
-Top_Locations.reset_index(drop = True, inplace = True)
+    users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
 
-Top_Locations = Top_Locations.sort_values(by=['count'])
-Top_Locations['percent'] = Top_Locations['count'] / 5000 * 100
-x = Top_Locations['percent'].tolist()
-y = Top_Locations['location'].tolist()
+    tweet_text = pd.DataFrame(data=users_locs, 
+                        columns=['user', "location"])
 
-for i in range(0, len(x)):
-    x[i] = str(round(x[i], 2)) + '%'
+    tweet_text['count'] = 1
 
-fig = go.Figure(data=[go.Bar(name = 'test', x=x, y=y, orientation='h', marker=dict(
-        color='rgba(255, 48, 66, 0.6)',
-        line=dict(
-            color='rgba(255, 48, 66, 1.0)',
-            width=1),
-    ))],
-               layout = {'xaxis': {'title': 'Share of Tweets', 'range': [0, Top_Locations['percent'].max()+.15]}})
+    Top_Users = tweet_text.groupby('user').sum()
+    Top_Users.reset_index(drop = False, inplace = True)
+    Top_Users[['user', 'count']]
+    Top_Users['user'] = '@' + Top_Users['user'].astype(str)
+    Top_Users = Top_Users.nlargest(15, 'count')
+    Top_Users.reset_index(drop = True, inplace = True)
 
-# Source
-annotations = []
-annotations.append(dict(xref='paper', yref='paper', 
-                        x=-.05, y=-0.24,
-                        text='Source: Webscrape of 5,000 most recent #EconTwitter tweets as of '+str(time_),
-                        font=dict(family='Arial', size=10, color='rgb(150,150,150)'),
-                        align="left",
-                        showarrow=False))
-
-# Change the bar mode
-fig.update_layout(barmode='group', title_text = 'Most Active Location Tags from #EconTwitter', xaxis_ticksuffix = "%",
-                  annotations=annotations, 
-                      margin=dict(l=20, r=20, t=70, b=90),
-                  paper_bgcolor='rgb(248, 248, 255)',
-                  plot_bgcolor='rgb(248, 248, 255)',)
-fig.update_traces(texttemplate=x, textposition='outside')
+    Top_Locations = tweet_text.groupby('location').sum()
+    Top_Locations.reset_index(drop = False, inplace = True)
+    Top_Locations[['location', 'count']]
+    Top_Locations = Top_Locations[Top_Locations['location'] != ''] 
+    Top_Locations = Top_Locations.nlargest(15, 'count')
+    Top_Locations.reset_index(drop = True, inplace = True)
 
 
-TwitterLocations = fig
+    Top_Locations = Top_Locations.sort_values(by=['count'])
+    Top_Locations['percent'] = Top_Locations['count'] / 5000 * 100
+    x = Top_Locations['percent'].tolist()
+    y = Top_Locations['location'].tolist()
 
-Top_Users = Top_Users.sort_values(by=['count'])
-Top_Users['percent'] = Top_Users['count'] / 5000 * 100
-x = Top_Users['percent'].tolist()
-y = Top_Users['user'].tolist()
+    for i in range(0, len(x)):
+        x[i] = str(round(x[i], 2)) + '%'
 
-for i in range(0, len(x)):
-    x[i] = str(round(x[i], 2)) + '%'
+    fig = go.Figure(data=[go.Bar(name = 'test', x=x, y=y, orientation='h', marker=dict(
+            color='rgba(255, 48, 66, 0.6)',
+            line=dict(
+                color='rgba(255, 48, 66, 1.0)',
+                width=1),
+        ))],
+                   layout = {'xaxis': {'title': 'Share of Tweets', 'range': [0, Top_Locations['percent'].max()+.15]}})
 
-fig = go.Figure(data=[go.Bar(name = 'test', x=x, y=y, orientation='h', marker=dict(
-        color='rgba(39, 103, 255, 0.6)',
-        line=dict(
-            color='rgba(39, 103, 255, 1.0)',
-            width=1),
-    ))],
-               layout = {'xaxis': {'title': 'Share of Tweets', 'range': [0, Top_Locations['percent'].max()+.15]}})
+    # Source
+    annotations = []
+    annotations.append(dict(xref='paper', yref='paper', 
+                            x=-.05, y=-0.24,
+                            text='Source: Webscrape of 5,000 most recent #EconTwitter tweets as of '+str(time_),
+                            font=dict(family='Arial', size=10, color='rgb(150,150,150)'),
+                            align="left",
+                            showarrow=False))
 
-# Source
-annotations = []
-annotations.append(dict(xref='paper', yref='paper', 
-                        x=-.05, y=-0.24,
-                        text='Source: Webscrape of 5,000 most recent #EconTwitter tweets as of '+str(time_),
-                        font=dict(family='Arial', size=10, color='rgb(150,150,150)'),
-                        align="left",
-                        showarrow=False))
+    # Change the bar mode
+    fig.update_layout(barmode='group', title_text = 'Most Active Location Tags from #EconTwitter', xaxis_ticksuffix = "%",
+                      annotations=annotations, 
+                          margin=dict(l=20, r=20, t=70, b=90),
+                      paper_bgcolor='rgb(248, 248, 255)',
+                      plot_bgcolor='rgb(248, 248, 255)',)
+    fig.update_traces(texttemplate=x, textposition='outside')
 
-# Change the bar mode
-fig.update_layout(barmode='group', title_text = 'Most Active Users from #EconTwitter', xaxis_ticksuffix = "%",
-                  annotations=annotations, 
-                      margin=dict(l=20, r=20, t=70, b=90),
-                  paper_bgcolor='rgb(248, 248, 255)',
-                  plot_bgcolor='rgb(248, 248, 255)',)
-fig.update_traces(texttemplate=x, textposition='outside')
 
-TwitterUsers = fig
+    TwitterLocations = fig
 
+    Top_Users = Top_Users.sort_values(by=['count'])
+    Top_Users['percent'] = Top_Users['count'] / 5000 * 100
+    x = Top_Users['percent'].tolist()
+    y = Top_Users['user'].tolist()
+
+    for i in range(0, len(x)):
+        x[i] = str(round(x[i], 2)) + '%'
+
+    fig = go.Figure(data=[go.Bar(name = 'test', x=x, y=y, orientation='h', marker=dict(
+            color='rgba(39, 103, 255, 0.6)',
+            line=dict(
+                color='rgba(39, 103, 255, 1.0)',
+                width=1),
+        ))],
+                   layout = {'xaxis': {'title': 'Share of Tweets', 'range': [0, Top_Locations['percent'].max()+.15]}})
+
+    # Source
+    annotations = []
+    annotations.append(dict(xref='paper', yref='paper', 
+                            x=-.05, y=-0.24,
+                            text='Source: Webscrape of 5,000 most recent #EconTwitter tweets as of '+str(time_),
+                            font=dict(family='Arial', size=10, color='rgb(150,150,150)'),
+                            align="left",
+                            showarrow=False))
+
+    # Change the bar mode
+    fig.update_layout(barmode='group', title_text = 'Most Active Users from #EconTwitter', xaxis_ticksuffix = "%",
+                      annotations=annotations, 
+                          margin=dict(l=20, r=20, t=70, b=90),
+                      paper_bgcolor='rgb(248, 248, 255)',
+                      plot_bgcolor='rgb(248, 248, 255)',)
+    fig.update_traces(texttemplate=x, textposition='outside')
+
+    TwitterUsers = fig
+except:
+    pass
 
 
 url='https://www.bls.gov/emp/tables/unemployment-earnings-education.htm'
