@@ -676,11 +676,11 @@ html.H4(Media.iloc[0, 0], style={'font-size': '16pt'}),
         
     ],style={'display': 'inline-block','width':'100px','max-width': '600px','float': 'inherit'}),
             
-#                    html.Div(children = [
-#        html.H4(Media.iloc[2, 0], style={'font-size': '16pt'}),
-#        html.P(dcc.Markdown(Media.iloc[2, 1])),           
-#        html.Iframe(height="200px", width="100%",  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/975112759&color=ff5500"),
-#    ],style={'display': 'inline-block', 'max-width': '600px',   'margin-left': '9.7%'}),
+                    html.Div(children = [
+        html.H4(Media.iloc[2, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(Media.iloc[2, 1])),           
+        html.Iframe(height="200px", width="100%",  src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/975112759&color=ff5500"),
+    ],style={'display': 'inline-block', 'max-width': '600px',   'margin-left': '9.7%'}),
         
             
     ]),
