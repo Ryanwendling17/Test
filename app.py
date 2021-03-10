@@ -38,7 +38,7 @@ time_ = time.strftime("%a, %d %b %Y %H:%M:%S %Z", time.localtime(time.time()))
 
 tweets = tweepy.Cursor(api.search,
                        q=search_words,
-                       lang="en").items(1000)
+                       lang="en").items(500)
 
 users_locs = [[tweet.user.screen_name, tweet.user.location] for tweet in tweets]
 
@@ -64,7 +64,7 @@ Top_Locations.reset_index(drop = True, inplace = True)
 
 
 Top_Locations = Top_Locations.sort_values(by=['count'])
-Top_Locations['percent'] = Top_Locations['count'] / 1000 * 100
+Top_Locations['percent'] = Top_Locations['count'] / 500 * 100
 x = Top_Locations['percent'].tolist()
 y = Top_Locations['location'].tolist()
 
@@ -83,7 +83,7 @@ fig = go.Figure(data=[go.Bar(name = 'test', x=x, y=y, orientation='h', marker=di
 annotations = []
 annotations.append(dict(xref='paper', yref='paper', 
                         x=-.05, y=-0.24,
-                        text='Source: Webscrape of 1,000 most recent #EconTwitter tweets as of '+str(time_),
+                        text='Source: Webscrape of 500 most recent #EconTwitter tweets as of '+str(time_),
                         font=dict(family='Arial', size=10, color='rgb(150,150,150)'),
                         align="left",
                         showarrow=False))
@@ -100,7 +100,7 @@ fig.update_traces(texttemplate=x, textposition='outside')
 TwitterLocations = fig
 
 Top_Users = Top_Users.sort_values(by=['count'])
-Top_Users['percent'] = Top_Users['count'] / 1000 * 100
+Top_Users['percent'] = Top_Users['count'] / 500 * 100
 x = Top_Users['percent'].tolist()
 y = Top_Users['user'].tolist()
 
@@ -119,7 +119,7 @@ fig = go.Figure(data=[go.Bar(name = 'test', x=x, y=y, orientation='h', marker=di
 annotations = []
 annotations.append(dict(xref='paper', yref='paper', 
                         x=-.05, y=-0.24,
-                        text='Source: Webscrape of 1,000 most recent #EconTwitter tweets as of '+str(time_),
+                        text='Source: Webscrape of 500 most recent #EconTwitter tweets as of '+str(time_),
                         font=dict(family='Arial', size=10, color='rgb(150,150,150)'),
                         align="left",
                         showarrow=False))
