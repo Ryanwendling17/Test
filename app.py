@@ -77,7 +77,7 @@ fig = go.Figure(data=[go.Bar(name = 'test', x=x, y=y, orientation='h', marker=di
             color='rgba(255, 48, 66, 1.0)',
             width=1),
     ))],
-               layout = {'xaxis': {'title': 'Share of Tweets', 'range': [0, Top_Locations['percent'].max()+.15]}})
+               layout = {'xaxis': {'title': 'Share of Tweets', 'range': [0, Top_Locations['percent'].max()+.2]}})
 
 # Source
 annotations = []
@@ -113,7 +113,7 @@ fig = go.Figure(data=[go.Bar(name = 'test', x=x, y=y, orientation='h', marker=di
             color='rgba(39, 103, 255, 1.0)',
             width=1),
     ))],
-               layout = {'xaxis': {'title': 'Share of Tweets', 'range': [0, Top_Locations['percent'].max()+.15]}})
+               layout = {'xaxis': {'title': 'Share of Tweets', 'range': [0, Top_Users['percent'].max()+.2]}})
 
 # Source
 annotations = []
