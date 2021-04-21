@@ -201,11 +201,14 @@ jobs = pd.DataFrame(columns = ['Title', 'Details', 'id'])
 
 
 newJob1 = {'Title': 'Agricultural Economist', 'Details': 'This position at the USDA in Kansas City, MO involves collecting, processing, and interpreting raw data to determine the significance of the findings. You will clean, analyze, and manage large complex datasets, and utilize the following statistical or data management software to conduct economic analyses: Excel; SAS, Stata or other statistical software; R Python, SQL or other equivalent programming languages; and Tableau or other data visualizations software. Apply [here!]( https://www.usajobs.gov/GetJob/ViewDetails/581486800)', 'id': 1}
-newJob2 = {'Title': 'Bain & Company\'s Texas Womxn\'s Leadership Summit', 'Details': 'Are you an undergraduate sophomore or junior womxn interested in tackling global business challenges in your career? Do you want to learn about how to work and be successful in the consulting industry? Join Bain Texas virtually this spring at our Texas Womxn’s Leadership Summit on April 29th – 30th. The Womxn’s Summit will provide you with the insight needed to thrive as a business leader and be successful as a Bain consultant. Apply [here!](http://bit.ly/21twls)', 'id': 2}
-
+#newJob2 = {'Title': 'Bain & Company\'s Texas Womxn\'s Leadership Summit', 'Details': 'Are you an undergraduate sophomore or junior womxn interested in tackling global business challenges in your career? Do you want to learn about how to work and be successful in the consulting industry? Join Bain Texas virtually this spring at our Texas Womxn’s Leadership Summit on April 29th – 30th. The Womxn’s Summit will provide you with the insight needed to thrive as a business leader and be successful as a Bain consultant. Apply [here!](http://bit.ly/21twls)', 'id': 2}
+newJob2 = {'Title': 'Careers in Community Organizing for Social Justice', 'Details': 'DART will hold an online info session on Wednesday, April 28 at 6pm eastern to discuss careers in community organizing. All KU students and alumni welcome, particularly those graduating before January 2022. DART trains professional organizers and community organizations how to work for social, economic and racial justice. RSVP [here.](www.thedartcenter.org/info)', 'id': 3}
+newJob3 = {'Title': 'Numerade', 'Details': 'Numerade is offering flexible, remote and paid internship opportunities! They have one educational opportunity to develop STEM content for middle school and high school students. The outcomes of this internship will provide you with experience developing project and time management, teaching, and increase subject matter expertise. If you\'re interested in applying please go sign up at this [link](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnumerade-dot-yamm-track.appspot.com%2FRedirect%3Fukey%3D1Y8KqK-6SKADPgt_H3LLIGy9r_KsKcof93mLIjfTVuFo-622781435%26key%3DYAMMID-04068529%26link%3Dhttps%253A%252F%252Fwww.numerade.com%252Feducators%252Fsignup%252F%253Futm_source%253Dother%2526utm_medium%253Demail%2526utm_campaign%253DProfs%2526utm_content%253Drecruitstudents&data=04%7C01%7Ctreinardy%40ku.edu%7C42072a8b050945b656b408d8f541720d%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C1%7C637529008746493990%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&sdata=rE7wZsQAL6oe%2FO7N4Ra3gCFaXFF8FIIKnnRMUF96LBM%3D&reserved=0) and select “content creator.” They are also offering a Business Development/Marketing internship. In this role you will learn the principles of content marketing, creative copywriting, and sales best practices. Apply for this role [here.](https://nam10.safelinks.protection.outlook.com/?url=https%3A%2F%2Fnumerade-dot-yamm-track.appspot.com%2FRedirect%3Fukey%3D1Y8KqK-6SKADPgt_H3LLIGy9r_KsKcof93mLIjfTVuFo-622781435%26key%3DYAMMID-04068529%26link%3Dhttps%253A%252F%252Fforms.gle%252FoB23oDtHZtB4YxP8A&data=04%7C01%7Ctreinardy%40ku.edu%7C42072a8b050945b656b408d8f541720d%7C3c176536afe643f5b96636feabbe3c1a%7C0%7C1%7C637529008746503991%7CUnknown%7CTWFpbGZsb3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C2000&sdata=5r8uk%2BW4PQ1KSYQeFx7pLm3uC6oRLOx12KXmkhabRn8%3D&reserved=)', 'id': 4}
 
 newJobs = [newJob1,
+          # newJob2,
            newJob2,
+           newJob3,
           ]
 
 jobs = jobs.append(newJobs, ignore_index=True)
@@ -472,6 +475,13 @@ app.layout = html.Div(children = [
         html.P(dcc.Markdown(jobs.iloc[1, 1])),
     ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left'}),
         
+        
+        html.Div(children = [
+        html.H4(jobs.iloc[2, 0], style={'font-size': '16pt'}),
+        html.P(dcc.Markdown(jobs.iloc[2, 1])),
+    ],style={'display': 'inline-block', 'max-width': '600px', 'vertical-align': 'top', 'float':'left'}),
+        
+      
 
     ],style={'margin-left': 'auto', 'margin-right': 'auto'}),
     dcc.Tab(label='Academic Opportunities', children=[
